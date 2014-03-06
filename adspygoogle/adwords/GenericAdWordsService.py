@@ -31,6 +31,7 @@ from adspygoogle.adwords.AdWordsErrors import AdWordsError
 from adspygoogle.adwords.AdWordsErrors import ERRORS
 from adspygoogle.adwords.AdWordsSoapBuffer import AdWordsSoapBuffer
 from adspygoogle.common import Utils
+from adspygoogle.common.Errors import ApiVersionNotSupportedError
 from adspygoogle.common.Errors import Error
 from adspygoogle.common.Errors import ValidationError
 from adspygoogle.common.GenericApiService import GenericApiService
@@ -71,7 +72,14 @@ class GenericAdWordsService(GenericApiService):
       lock: thread.lock Thread lock to use to synchronize requests.
       logger: Logger Instance of Logger to use for logging.
       service_name: string The name of this service.
+
+    Raises:
+      ApiVersionNotSupportedError: If client login is used after v201309.
     """
+    if 'authToken' in headers and op_config['version'] > 'v201309':
+      raise ApiVersionNotSupportedError('ClientLogin is not supported for this'
+                                        ' version')
+
     group = op_config['group']
     if service_name == 'BulkMutateJobService': group = 'job'
     service_url = [op_config['server'], 'api/adwords', group,
@@ -148,6 +156,7 @@ class GenericAdWordsService(GenericApiService):
 
     Args:
       method_name: string The name of the method to pull information for.
+
     Returns:
       dict A dictionary containing information about a SOAP method.
     """

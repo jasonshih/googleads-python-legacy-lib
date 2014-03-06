@@ -24,21 +24,20 @@ sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import time
 import unittest
 
-from examples.adspygoogle.adwords.v201309.error_handling import handle_partial_failures
-from examples.adspygoogle.adwords.v201309.error_handling import handle_two_factor_authorization_error
+from examples.adspygoogle.adwords.v201402.error_handling import handle_partial_failures
 from tests.adspygoogle.adwords import client
-from tests.adspygoogle.adwords import SERVER_V201309
-from tests.adspygoogle.adwords import TEST_VERSION_V201309
+from tests.adspygoogle.adwords import SERVER_V201402
+from tests.adspygoogle.adwords import TEST_VERSION_V201402
 from tests.adspygoogle.adwords import util
-from tests.adspygoogle.adwords import VERSION_V201309
+from tests.adspygoogle.adwords import VERSION_V201402
 
 
 class ErrorHandling(unittest.TestCase):
 
   """Unittest suite for Error Handling code examples."""
 
-  SERVER = SERVER_V201309
-  VERSION = VERSION_V201309
+  SERVER = SERVER_V201402
+  VERSION = VERSION_V201402
   client.debug = False
   loaded = False
 
@@ -60,11 +59,7 @@ class ErrorHandling(unittest.TestCase):
     """Tests whether we can handle partial failures."""
     handle_partial_failures.main(client, self.__class__.ad_group_id)
 
-  def testHandleTwoFactorAuthorizationError(self):
-    """Test whether we can handle two factor authorization errors."""
-    handle_two_factor_authorization_error.main()
-
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201309:
+  if TEST_VERSION_V201402:
     unittest.main()

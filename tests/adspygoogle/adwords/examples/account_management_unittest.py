@@ -23,14 +23,14 @@ import sys
 sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import unittest
 
-from examples.adspygoogle.adwords.v201309.account_management import create_account
-from examples.adspygoogle.adwords.v201309.account_management import get_account_alerts
-from examples.adspygoogle.adwords.v201309.account_management import get_account_changes
-from examples.adspygoogle.adwords.v201309.account_management import get_account_hierarchy
+from examples.adspygoogle.adwords.v201402.account_management import create_account
+from examples.adspygoogle.adwords.v201402.account_management import get_account_alerts
+from examples.adspygoogle.adwords.v201402.account_management import get_account_changes
+from examples.adspygoogle.adwords.v201402.account_management import get_account_hierarchy
 from tests.adspygoogle.adwords import client
-from tests.adspygoogle.adwords import SERVER_V201309
-from tests.adspygoogle.adwords import TEST_VERSION_V201309
-from tests.adspygoogle.adwords import VERSION_V201309
+from tests.adspygoogle.adwords import SERVER_V201402
+from tests.adspygoogle.adwords import TEST_VERSION_V201402
+from tests.adspygoogle.adwords import VERSION_V201402
 
 
 # Currently, creating accounts is broken in sandbox, so we disable that test.
@@ -41,8 +41,8 @@ class AccountManagement(unittest.TestCase):
 
   """Unittest suite for Account Management code examples."""
 
-  SERVER = SERVER_V201309
-  VERSION = VERSION_V201309
+  SERVER = SERVER_V201402
+  VERSION = VERSION_V201402
   client.debug = False
 
   def setUp(self):
@@ -70,5 +70,5 @@ class AccountManagement(unittest.TestCase):
 
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201309:
+  if TEST_VERSION_V201402:
     unittest.main()

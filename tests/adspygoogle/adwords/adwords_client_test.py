@@ -28,6 +28,7 @@ sys.path.insert(0, os.path.join('..', '..', '..'))
 import mock
 
 from adspygoogle.adwords.AdWordsClient import AdWordsClient
+from adspygoogle.common.Errors import ApiVersionNotSupportedError
 from adspygoogle.common.Errors import ValidationError
 
 
@@ -149,7 +150,7 @@ class AdWordsClientServiceTest(unittest.TestCase):
 
   def setUp(self):
     """Prepare unittest."""
-    self.client = AdWordsClient(headers={'authToken': 'AUTH TOKEN',
+    self.client = AdWordsClient(headers={'oauth2credentials': 'credential!',
                                          'userAgent': 'USER AGENT',
                                          'developerToken': 'DEV TOKEN'})
 
@@ -183,20 +184,41 @@ class AdWordsClientServiceTest(unittest.TestCase):
       service = self.client.GetFeedService()
       self.assertEquals('FeedService', service._service_name)
 
-  def testGetCampaignSharedSetService(self):
+  def testGetCampaignSharedSetService_v201309(self):
+    """CampaignSharedSetService should be created in v201309."""
     with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
-      service = self.client.GetCampaignSharedSetService()
+      service = self.client.GetCampaignSharedSetService(version='v201309')
       self.assertEquals('CampaignSharedSetService', service._service_name)
 
-  def testGetSharedSetService(self):
+  def testGetCampaignSharedSetService_v201402(self):
+    """CampaignSharedSetService shouldn't be created in v201402."""
     with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
-      service = self.client.GetSharedSetService()
+      with self.assertRaises(ValidationError):
+        self.client.GetCampaignSharedSetService()
+
+  def testGetSharedSetService_v201309(self):
+    """SharedSetService should be created in v201309."""
+    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
+      service = self.client.GetSharedSetService(version='v201309')
       self.assertEquals('SharedSetService', service._service_name)
 
-  def testGetSharedCriterionService(self):
+  def testGetSharedSetService_v201402(self):
+    """SharedSetService shouldn't be created in v201402."""
     with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
-      service = self.client.GetSharedCriterionService()
+      with self.assertRaises(ValidationError):
+        self.client.GetSharedSetService()
+
+  def testGetSharedCriterionService_v201309(self):
+    """SharedCriterionService should be created in v201309."""
+    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
+      service = self.client.GetSharedCriterionService(version='v201309')
       self.assertEquals('SharedCriterionService', service._service_name)
+
+  def testGetSharedCriterionService_v201402(self):
+    """SharedCriterionService shouldn't be created in v201402."""
+    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
+      with self.assertRaises(ValidationError):
+        self.client.GetSharedCriterionService()
 
   def testGetAdGroupBidModifierService(self):
     with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
@@ -207,6 +229,56 @@ class AdWordsClientServiceTest(unittest.TestCase):
     with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
       service = self.client.GetOfflineConversionFeedService()
       self.assertEquals('OfflineConversionFeedService', service._service_name)
+
+
+class AssertClientLoginFailsTest(unittest.TestCase):
+  """Tests verifying that client login fails in versions newer than v201309"""
+
+  def setUp(self):
+    """Prepare unittest."""
+    self.client = AdWordsClient(headers={'authToken': 'AUTH TOKEN',
+                                         'userAgent': 'USER AGENT',
+                                         'developerToken': 'DEV TOKEN'})
+
+  def testGetBudgetService(self):
+    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
+      with self.assertRaises(ApiVersionNotSupportedError):
+        self.client.GetBudgetService()
+
+  def testGetAdGroupFeedService(self):
+    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
+      with self.assertRaises(ApiVersionNotSupportedError):
+        self.client.GetAdGroupFeedService()
+
+  def testGetCampaignFeedService(self):
+    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
+      with self.assertRaises(ApiVersionNotSupportedError):
+        self.client.GetCampaignFeedService()
+
+  def testGetFeedItemService(self):
+    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
+      with self.assertRaises(ApiVersionNotSupportedError):
+        self.client.GetFeedItemService()
+
+  def testGetFeedMappingService(self):
+    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
+      with self.assertRaises(ApiVersionNotSupportedError):
+        self.client.GetFeedMappingService()
+
+  def testGetFeedService(self):
+    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
+      with self.assertRaises(ApiVersionNotSupportedError):
+        self.client.GetFeedService()
+
+  def testGetAdGroupBidModifierService(self):
+    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
+      with self.assertRaises(ApiVersionNotSupportedError):
+        self.client.GetAdGroupBidModifierService()
+
+  def testGetOfflineConversionFeedService(self):
+    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
+      with self.assertRaises(ApiVersionNotSupportedError):
+        self.client.GetOfflineConversionFeedService()
 
 
 if __name__ == '__main__':

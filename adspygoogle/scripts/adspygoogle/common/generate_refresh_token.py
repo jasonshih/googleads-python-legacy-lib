@@ -31,7 +31,9 @@ PRODUCT_TO_OAUTH_SCOPE = [
     ('AdWords / Ad Exchange Buyer', 'https://adwords.google.com/api/adwords'),
     ('DoubleClick for Advertisers', 'https://www.googleapis.com/auth/'
      'dfatrafficking'),
-    ('DoubleClick for Publishers', 'https://www.google.com/apis/ads/publisher')
+    ('DoubleClick for Publishers', 'https://www.google.com/apis/ads/publisher'),
+    ('Places', 'https://www.google.com/local/add'),
+    ('Other', None)
 ]
 
 
@@ -68,11 +70,16 @@ def main():
   client_secret = raw_input('Client Secret: ').strip()
   product = ChooseProduct()
 
+  if product != 'Other':
+    scope = [scope[1] for scope in PRODUCT_TO_OAUTH_SCOPE
+             if scope[0] == product][0]
+  else:
+    scope = raw_input('Enter scope: ').strip()
+
   flow = client.OAuth2WebServerFlow(
       client_id=client_id,
       client_secret=client_secret,
-      scope=[scope[1] for scope in PRODUCT_TO_OAUTH_SCOPE
-             if scope[0] == product][0],
+      scope=scope,
       user_agent='Ads Python Client Library',
       redirect_uri='urn:ietf:wg:oauth:2.0:oob')
 
@@ -90,7 +97,8 @@ def main():
     sys.exit(1)
   else:
     print ('OAuth 2.0 authorization successful!\n\n'
-           'Your refresh token is: %s' % credential.refresh_token)
+           'Your access token is:\n%s\n\nYour refresh token is:\n%s'
+           % (credential.access_token, credential.refresh_token))
 
 
 if __name__ == '__main__':

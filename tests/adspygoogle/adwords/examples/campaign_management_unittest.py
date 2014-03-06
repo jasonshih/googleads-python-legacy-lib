@@ -24,28 +24,28 @@ sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import time
 import unittest
 
-from examples.adspygoogle.adwords.v201309.campaign_management import add_experiment
-from examples.adspygoogle.adwords.v201309.campaign_management import add_keywords_in_bulk
-from examples.adspygoogle.adwords.v201309.campaign_management import add_location_extension
-from examples.adspygoogle.adwords.v201309.campaign_management import get_all_disapproved_ads
-from examples.adspygoogle.adwords.v201309.campaign_management import get_all_disapproved_ads_with_awql
-from examples.adspygoogle.adwords.v201309.campaign_management import promote_experiment
-from examples.adspygoogle.adwords.v201309.campaign_management import set_ad_parameters
-from examples.adspygoogle.adwords.v201309.campaign_management import validate_text_ad
+from examples.adspygoogle.adwords.v201402.campaign_management import add_experiment
+from examples.adspygoogle.adwords.v201402.campaign_management import add_keywords_in_bulk
+from examples.adspygoogle.adwords.v201402.campaign_management import add_location_extension
+from examples.adspygoogle.adwords.v201402.campaign_management import get_all_disapproved_ads
+from examples.adspygoogle.adwords.v201402.campaign_management import get_all_disapproved_ads_with_awql
+from examples.adspygoogle.adwords.v201402.campaign_management import promote_experiment
+from examples.adspygoogle.adwords.v201402.campaign_management import set_ad_parameters
+from examples.adspygoogle.adwords.v201402.campaign_management import validate_text_ad
 from tests.adspygoogle.adwords import client
 from tests.adspygoogle.adwords import HTTP_PROXY
-from tests.adspygoogle.adwords import SERVER_V201309
-from tests.adspygoogle.adwords import TEST_VERSION_V201309
+from tests.adspygoogle.adwords import SERVER_V201402
+from tests.adspygoogle.adwords import TEST_VERSION_V201402
 from tests.adspygoogle.adwords import util
-from tests.adspygoogle.adwords import VERSION_V201309
+from tests.adspygoogle.adwords import VERSION_V201402
 
 
 class CampaignManagement(unittest.TestCase):
 
   """Unittest suite for Campaign Management code examples."""
 
-  SERVER = SERVER_V201309
-  VERSION = VERSION_V201309
+  SERVER = SERVER_V201402
+  VERSION = VERSION_V201402
   client.debug = False
   loaded = False
 
@@ -108,5 +108,5 @@ class CampaignManagement(unittest.TestCase):
 
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201309:
+  if TEST_VERSION_V201402:
     unittest.main()

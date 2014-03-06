@@ -20,8 +20,8 @@ __author__ = 'api.kwinter@gmail.com (Kevin Winter)'
 
 from adspygoogle.common import Utils
 from tests.adspygoogle.adwords import HTTP_PROXY
-from tests.adspygoogle.adwords import SERVER_V201306 as SERVER
-from tests.adspygoogle.adwords import VERSION_V201306 as VERSION
+from tests.adspygoogle.adwords import SERVER_V201402 as SERVER
+from tests.adspygoogle.adwords import VERSION_V201402 as VERSION
 
 
 def CreateTestBudget(client):
@@ -71,6 +71,7 @@ def CreateTestCampaign(client):
                   'enhancedCpcEnabled': 'false'
               }
           },
+          'advertisingChannelType': 'SEARCH',
           'budget': {
               'budgetId': CreateTestBudget(client)
           },
@@ -82,6 +83,58 @@ def CreateTestCampaign(client):
           ]
       }
   }]
+  return campaign_service.Mutate(
+      operations)[0]['value'][0]['id']
+
+
+def CreateTestShoppingCampaign(client, budget_id, merchant_id):
+  """Creates a shopping campaign to run tests with.
+
+  Note that you need to have linked a Merchant Account.
+
+  Args:
+    client: AdWordsClient client to obtain services from.
+    budget_id: int id of the budget to be associated with the campaign
+    merchant_id: int merchant id to be associated with campaign
+
+  Returns:
+    int CampaignId
+  """
+  # Create campaign
+  campaign = {
+      'name': 'Shopping campaign #%s' % Utils.GetUniqueName(),
+      # The advertisingChannelType is what makes this a shopping campaign
+      'advertisingChannelType': 'SHOPPING',
+      # Set shared budget (required)
+      'budget': {
+          'budgetId': budget_id
+      },
+      'biddingStrategyConfiguration': {
+          'biddingStrategyType': 'MANUAL_CPC'
+      },
+      'settings': [
+          # Set keyword matching setting (required)
+          {
+              'xsi_type': 'KeywordMatchSetting',
+              'optIn': 'false'
+          },
+          # All shopping campaigns need a ShoppingSetting
+          {
+              'xsi_type': 'ShoppingSetting',
+              'salesCountry': 'US',
+              'campaignPriority': '0',
+              'merchantId': merchant_id
+          }
+      ]
+  }
+
+  operations = [{
+      'operator': 'ADD',
+      'operand': campaign
+  }]
+
+  campaign_service = client.GetCampaignService(SERVER, VERSION, HTTP_PROXY)
+
   return campaign_service.Mutate(
       operations)[0]['value'][0]['id']
 
@@ -107,6 +160,7 @@ def CreateTestRTBCampaign(client):
                   'xsi_type': 'ManualCpmBiddingScheme',
               }
           },
+          'advertisingChannelType': 'DISPLAY',
           'budget': {
               'budgetId': CreateTestBudget(client)
           },
@@ -146,9 +200,6 @@ def CreateTestAdGroup(client, campaign_id):
                       'xsi_type': 'CpcBid',
                       'bid': {
                           'microAmount': '1000000'
-                      },
-                      'contentBid': {
-                          'microAmount': '2000000'
                       }
                   }
               ]
@@ -158,6 +209,30 @@ def CreateTestAdGroup(client, campaign_id):
   ad_groups = ad_group_service.Mutate(operations)[0]['value']
   return ad_groups[0]['id']
 
+
+def CreateTestShoppingAdGroup(client, campaign_id):
+  """Create a shopping AdGroup to run tests with
+
+  Args:
+    client: AdWordsClient client to obtain services from.
+    campaign_id: int ID of a Shopping Campaign.
+
+  Returns:
+    int AdGroupId
+  """
+  adgroup = {
+      'campaignId': campaign_id,
+      'name': 'AdGroup #%s' % Utils.GetUniqueName()
+  }
+
+  operations = [{
+      'operator': 'ADD',
+      'operand': adgroup
+  }]
+
+  adgroup_service = client.GetAdGroupService(SERVER, VERSION, HTTP_PROXY)
+
+  return adgroup_service.Mutate(operations)[0]['value'][0]['id']
 
 def CreateTestCPMAdGroup(client, campaign_id):
   """Creates a CPM AdGroup to run tests with.

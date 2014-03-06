@@ -24,24 +24,24 @@ sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import time
 import unittest
 
-from examples.adspygoogle.adwords.v201309.targeting import add_campaign_targeting_criteria
-from examples.adspygoogle.adwords.v201309.targeting import add_demographic_targeting_criteria
-from examples.adspygoogle.adwords.v201309.targeting import get_campaign_targeting_criteria
-from examples.adspygoogle.adwords.v201309.targeting import get_targetable_languages_and_carriers
-from examples.adspygoogle.adwords.v201309.targeting import lookup_location
+from examples.adspygoogle.adwords.v201402.targeting import add_campaign_targeting_criteria
+from examples.adspygoogle.adwords.v201402.targeting import add_demographic_targeting_criteria
+from examples.adspygoogle.adwords.v201402.targeting import get_campaign_targeting_criteria
+from examples.adspygoogle.adwords.v201402.targeting import get_targetable_languages_and_carriers
+from examples.adspygoogle.adwords.v201402.targeting import lookup_location
 from tests.adspygoogle.adwords import client
-from tests.adspygoogle.adwords import SERVER_V201309
-from tests.adspygoogle.adwords import TEST_VERSION_V201309
+from tests.adspygoogle.adwords import SERVER_V201402
+from tests.adspygoogle.adwords import TEST_VERSION_V201402
 from tests.adspygoogle.adwords import util
-from tests.adspygoogle.adwords import VERSION_V201309
+from tests.adspygoogle.adwords import VERSION_V201402
 
 
 class Targeting(unittest.TestCase):
 
   """Unittest suite for Targeting code examples."""
 
-  SERVER = SERVER_V201309
-  VERSION = VERSION_V201309
+  SERVER = SERVER_V201402
+  VERSION = VERSION_V201402
   client.debug = False
   loaded = False
 
@@ -77,5 +77,5 @@ class Targeting(unittest.TestCase):
 
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201309:
+  if TEST_VERSION_V201402:
     unittest.main()

@@ -45,6 +45,7 @@ class GenerateRefreshTokenTest(unittest.TestCase):
         'Code: ': 'mycode'
     }
     mock_credential = mock.Mock()
+    mock_credential.access_token = 'myaccesstoken'
     mock_credential.refresh_token = 'myrefreshtoken'
 
     def RawInputReturnValues(*args, **unused_kwargs):
@@ -75,7 +76,8 @@ class GenerateRefreshTokenTest(unittest.TestCase):
       flow_instance.step2_exchange.assert_called_once_with('mycode')
 
       self.assertTrue(output.getvalue().strip().endswith(
-          'Your refresh token is: myrefreshtoken'))
+          'Your access token is:\nmyaccesstoken\n\n'
+          'Your refresh token is:\nmyrefreshtoken'))
       output.close()
 
   def testGenerateRefreshToken_DFA(self):
@@ -87,6 +89,7 @@ class GenerateRefreshTokenTest(unittest.TestCase):
         'Code: ': 'mycode'
     }
     mock_credential = mock.Mock()
+    mock_credential.access_token = 'myaccesstokendfa'
     mock_credential.refresh_token = 'myrefreshtokendfa'
 
     def RawInputReturnValues(*args, **unused_kwargs):
@@ -117,7 +120,8 @@ class GenerateRefreshTokenTest(unittest.TestCase):
       flow_instance.step2_exchange.assert_called_once_with('mycode')
 
       self.assertTrue(output.getvalue().strip().endswith(
-          'Your refresh token is: myrefreshtokendfa'))
+          'Your access token is:\nmyaccesstokendfa\n\n'
+          'Your refresh token is:\nmyrefreshtokendfa'))
       output.close()
 
   def testGenerateRefreshToken_DFP(self):
@@ -129,6 +133,7 @@ class GenerateRefreshTokenTest(unittest.TestCase):
         'Code: ': 'mycode'
     }
     mock_credential = mock.Mock()
+    mock_credential.access_token = 'myaccesstokendfp'
     mock_credential.refresh_token = 'myrefreshtokendfp'
 
     def RawInputReturnValues(*args, **unused_kwargs):
@@ -159,7 +164,8 @@ class GenerateRefreshTokenTest(unittest.TestCase):
       flow_instance.step2_exchange.assert_called_once_with('mycode')
 
       self.assertTrue(output.getvalue().strip().endswith(
-          'Your refresh token is: myrefreshtokendfp'))
+          'Your access token is:\nmyaccesstokendfp\n\n'
+          'Your refresh token is:\nmyrefreshtokendfp'))
       output.close()
 
 

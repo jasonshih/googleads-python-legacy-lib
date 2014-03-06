@@ -24,22 +24,22 @@ sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import time
 import unittest
 
-from examples.adspygoogle.adxbuyer.v201309.campaign_management import add_placements_in_bulk
-from examples.adspygoogle.adxbuyer.v201309.error_handling import handle_partial_failures
-from examples.adspygoogle.adxbuyer.v201309.optimization import get_placement_ideas
+from examples.adspygoogle.adxbuyer.v201402.campaign_management import add_placements_in_bulk
+from examples.adspygoogle.adxbuyer.v201402.error_handling import handle_partial_failures
+from examples.adspygoogle.adxbuyer.v201402.optimization import get_placement_ideas
 from tests.adspygoogle.adwords import client
-from tests.adspygoogle.adwords import SERVER_V201309
-from tests.adspygoogle.adwords import TEST_VERSION_V201309
+from tests.adspygoogle.adwords import SERVER_V201402
+from tests.adspygoogle.adwords import TEST_VERSION_V201402
 from tests.adspygoogle.adwords import util
-from tests.adspygoogle.adwords import VERSION_V201309
+from tests.adspygoogle.adwords import VERSION_V201402
 
 
 class OtherExamples(unittest.TestCase):
 
   """Unittest suite for other code examples."""
 
-  SERVER = SERVER_V201309
-  VERSION = VERSION_V201309
+  SERVER = SERVER_V201402
+  VERSION = VERSION_V201402
   client.debug = False
   loaded = False
 
@@ -68,5 +68,5 @@ class OtherExamples(unittest.TestCase):
 
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201309:
+  if TEST_VERSION_V201402:
     unittest.main()

@@ -81,7 +81,7 @@ class ReportDownloader(object):
     self._soappyservice = XsdToWsdl.CreateWsdlFromXsdUrl(xsd_url)
     self._logger = logger
 
-  def DownloadReport(self, report_definition_or_id, return_micros=False,
+  def DownloadReport(self, report_definition_or_id, return_micros=None,
                      file_path=None, fileobj=None):
     """Downloads a report by object or id.
 
@@ -107,7 +107,7 @@ class ReportDownloader(object):
                                        fileobj) or file_path
 
   def DownloadReportWithAwql(self, report_query, download_format,
-                             return_micros=False, file_path=None, fileobj=None):
+                             return_micros=None, file_path=None, fileobj=None):
     """Downloads a report with AWQL.
 
     Args:
@@ -130,7 +130,7 @@ class ReportDownloader(object):
                                               return_micros,
                                               fileobj) or file_path
 
-  def __DownloadAdHocReport(self, report_definition, return_micros=False,
+  def __DownloadAdHocReport(self, report_definition, return_micros=None,
                             fileobj=None):
     """Downloads an AdHoc report.
 
@@ -151,7 +151,7 @@ class ReportDownloader(object):
   def __DownloadAdHocReportWithAwql(self,
                                     report_query,
                                     download_format,
-                                    return_micros=False,
+                                    return_micros=None,
                                     fileobj=None):
     """Downloads an AdHoc report with AWQL.
 
@@ -172,7 +172,7 @@ class ReportDownloader(object):
     payload = urllib.urlencode(query_params)
     return self.__DownloadReport(payload, return_micros, fileobj)
 
-  def __DownloadReport(self, report_payload, return_micros=False, fileobj=None):
+  def __DownloadReport(self, report_payload, return_micros=None, fileobj=None):
     """Downloads an AdHoc report for the specified payload.
 
     Args:
@@ -236,7 +236,7 @@ class ReportDownloader(object):
     """
     return re.sub(ATTRIBUTES_REGEX, '', report_xml).strip()
 
-  def __DownloadReportById(self, report_definition_id, return_micros=False,
+  def __DownloadReportById(self, report_definition_id, return_micros=None,
                            fileobj=None):
     """Download report and return raw data.
 
@@ -289,7 +289,9 @@ class ReportDownloader(object):
           urllib.urlencode({'auth':
                             self._headers['authToken'].strip()}))
 
-    headers['returnMoneyInMicros'] = str(return_micros).lower()
+    if return_micros is not None:
+      headers['returnMoneyInMicros'] = str(return_micros).lower()
+
     headers['developerToken'] = self._headers['developerToken']
     headers['User-Agent'] = self._headers['userAgent']
     if Utils.BoolTypeConvert(self._config['compress']):

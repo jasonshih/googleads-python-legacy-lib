@@ -27,13 +27,13 @@ from adspygoogle.adwords.AdWordsClient import AdWordsClient
 
 
 HTTP_PROXY = None
-SERVER_V201302 = 'https://adwords.google.com'
 SERVER_V201306 = 'https://adwords.google.com'
 SERVER_V201309 = 'https://adwords.google.com'
-TEST_VERSION_V201302 = True
+SERVER_V201402 = 'https://adwords.google.com'
 TEST_VERSION_V201306 = True
 TEST_VERSION_V201309 = True
-VERSION_V201302 = 'v201302'
+TEST_VERSION_V201402 = True
 VERSION_V201306 = 'v201306'
 VERSION_V201309 = 'v201309'
+VERSION_V201402 = 'v201402'
 client = AdWordsClient(path=os.path.join('..', '..', '..'))
