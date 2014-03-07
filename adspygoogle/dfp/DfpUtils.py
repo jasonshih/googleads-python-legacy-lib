@@ -30,7 +30,7 @@ from adspygoogle.dfp import LIB_HOME
 import pytz
 
 # The suggested page limit per page fetched from the API.
-SUGGESTED_PAGE_LIMIT = 500
+PAGE_LIMIT = 500
 # The chunk size used for report downloads.
 _CHUNK_SIZE = 16 * 1024
 
@@ -44,7 +44,7 @@ class FilterStatement(object):
   """
 
   def __init__(
-      self, where_clause='', values=None, limit=SUGGESTED_PAGE_LIMIT, offset=0):
+      self, where_clause='', values=None, limit=PAGE_LIMIT, offset=0):
     self.where_clause = where_clause
     self.values = values
     self.limit = limit
@@ -111,7 +111,7 @@ def _PageThroughPqlSet(pql_service, pql_query, output_function, values):
   while True:
     filter_statement = {
         'query': '%s LIMIT %s OFFSET %s' % (
-            pql_query, SUGGESTED_PAGE_LIMIT, offset),
+            pql_query, PAGE_LIMIT, offset),
         'values': values
     }
     response = pql_service.select(filter_statement)[0]
@@ -131,7 +131,7 @@ def _PageThroughPqlSet(pql_service, pql_query, output_function, values):
                          in entity['values']])
 
       offset += result_set_size
-      if result_set_size != SUGGESTED_PAGE_LIMIT:
+      if result_set_size != PAGE_LIMIT:
         break
     elif offset == 0:
       break

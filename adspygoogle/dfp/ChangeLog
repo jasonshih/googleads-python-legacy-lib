@@ -1,3 +1,6 @@
+9.11.1:
+- Fix naming for PAGE_LIMIT constant in DfpUtils.
+
 9.11.0:
 - Added support for v201403.
 - Removed utilities to GetAllEntities / DownloadReport. Modified examples

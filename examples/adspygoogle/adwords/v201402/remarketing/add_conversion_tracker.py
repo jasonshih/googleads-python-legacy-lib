@@ -52,7 +52,8 @@ def main(client):
               'productAdsChargeableConversionWindow': '15',
               'conversionPageLanguage': 'en',
               'backgroundColor': '#0000FF',
-              'defaultRevenueValue': '0.0'
+              'defaultRevenueValue': '0.0',
+              'alwaysUseDefaultRevenueValue': 'true'
           }
       }
   ]
