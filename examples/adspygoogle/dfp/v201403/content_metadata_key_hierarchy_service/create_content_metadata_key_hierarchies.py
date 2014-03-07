@@ -66,7 +66,7 @@ def main(client, hierarchy_level_one_key_id, hierarchy_level_two_key_id):
 
   content_metadata_key_hierarchies = (
       content_metadata_key_hierarchy_service
-      .createContentMetadataKeyHierarchies([content_metadata_key_hierarchy]))
+      .CreateContentMetadataKeyHierarchies([content_metadata_key_hierarchy]))
 
   # Display results.
   for content_metadata_key_hierarchy in content_metadata_key_hierarchies:
