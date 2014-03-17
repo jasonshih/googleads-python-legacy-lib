@@ -1,3 +1,12 @@
+# Notice: A Newer Library Is Available
+
+A newer library named `googleads` is now available, complete with Python 3 
+support. You can read more about it here:
+* [The release announcement](http://googleadsdeveloper.blogspot.com/2014/03/the-ads-apis-python-client-library.html)
+* [googleads github page](https://github.com/googleads/googleads-python-lib)
+* [Migrating from adspygoogle to googleads](https://github.com/googleads/googleads-python-lib/wiki/Migrating-from-adspygoogle-to-googleads)
+
+
 #The Google Ads APIs Python Client Libraries
 
 
