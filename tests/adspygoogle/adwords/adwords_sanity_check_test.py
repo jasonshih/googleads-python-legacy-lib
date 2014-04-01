@@ -31,11 +31,11 @@ class AdWordsSanityCheckTest(unittest.TestCase):
   """Tests for AdWordsSanityCheck."""
 
   def testValidateService_infoAllowed(self):
-    AdWordsSanityCheck.ValidateService('AdExtensionOverrideService', 'v201306')
+    AdWordsSanityCheck.ValidateService('CampaignSharedSetService', 'v201309')
 
   def testValidateService_infoNotAllowed(self):
     self.assertRaises(ValidationError, AdWordsSanityCheck.ValidateService,
-                      'AdExtensionOverrideService', 'v201309')
+                      'CampaignSharedSetService', 'v201402')
 
 
 if __name__ == '__main__':

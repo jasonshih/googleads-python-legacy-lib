@@ -1,3 +1,14 @@
+====================================
+Notice: A Newer Library Is Available
+====================================
+
+A newer library named googleads is now available, complete with Python 3
+support. You can read more about it here:
+
+* `The release announcement <http://googleadsdeveloper.blogspot.com/2014/03/the-ads-apis-python-client-library.html>`_.
+* `googleads github page <https://github.com/googleads/googleads-python-lib>`_.
+* `Migrating from adspygoogle to googleads <https://github.com/googleads/googleads-python-lib/wiki/Migrating-from-adspygoogle-to-googleads>`_.
+
 ===========================================
 The Google Ads APIs Python Client Libraries
 ===========================================
@@ -9,7 +20,7 @@ The Google Ads APIs Python Client Libraries support the following products:
 * {{ dfp }}
 
 You can find more information about the Google Ads Python Client Libraries
-`here <https://github.com/googleads/googleads-python-lib/>`_.
+`here <https://github.com/googleads/googleads-python-legacy-lib/>`_.
 
 Installation
 ============
@@ -36,7 +47,7 @@ Examples and Configuration Scripts
 This package only provides the core components necessary to use the client
 libraries. If you would like to obtain example code for any of the included
 client libraries, you can find it on our
-`downloads page <https://github.com/googleads/googleads-python-lib/releases>`_.
+`downloads page <https://github.com/googleads/googleads-python-legacy-lib/releases>`_.
 
 Known Issues
 ============
@@ -71,4 +82,4 @@ Contact Us
 
 Do you have an issue using the Ads Python Client Libraries? Or perhaps some
 feedback for how we can improve them? Feel free to let us know on our
-`issue tracker <https://github.com/googleads/googleads-python-lib/issues>`_.
+`issue tracker <https://github.com/googleads/googleads-python-legacy-lib/issues>`_.

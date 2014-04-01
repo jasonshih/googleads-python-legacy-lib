@@ -33,6 +33,7 @@ sys.path.insert(0, os.path.join('..', '..', '..', '..', '..'))
 
 # Import appropriate classes from the client library.
 from adspygoogle import DfpClient
+from adspygoogle.dfp import DfpUtils
 
 AUDIENCE_SEGMENT_ID = 'INSERT_AUDIENCE_SEGMENT_ID_HERE'
 
@@ -42,31 +43,25 @@ def main(client, audience_segment_id):
   audience_segment_service = client.GetService(
       'AudienceSegmentService', version='v201403')
 
-  # Specify bind value to filter on first party audience segments
-  values = [
-      {
-          'key': 'type',
-          'value': {
-              'xsi_type': 'TextValue',
-              'value': 'FIRST_PARTY'
-              }
-      },
-      {
-          'key': 'audience_segment_id',
-          'value': {
-              'xsi_type': 'NumberValue',
-              'value': audience_segment_id
-              }
-      }
-  ]
-
-  # Create a statement to select specified first party audience segments.
-  filter_statement = {'query': ('WHERE type = :type AND '
-                                'id = :audience_segment_id LIMIT 1'),
-                      'values': values}
+  # Create statement object to get the specified first party audience segment.
+  values = (
+      [{'key': 'type',
+        'value': {
+            'xsi_type': 'TextValue',
+            'value': 'FIRST_PARTY'
+            }
+       },
+       {'key': 'audience_segment_id',
+        'value': {
+            'xsi_type': 'NumberValue',
+            'value': audience_segment_id
+            }
+       }])
+  query = 'WHERE Type = :type AND Id = :audience_segment_id'
+  statement = DfpUtils.FilterStatement(query, values, 1)
 
   response = audience_segment_service.getAudienceSegmentsByStatement(
-      filter_statement)[0]
+      statement.ToStatement())[0]
 
   if 'results' in response:
     segments = response['results']
@@ -81,7 +76,7 @@ def main(client, audience_segment_id):
 
     populated_audience_segments = (
         audience_segment_service.performAudienceSegmentAction(
-            action, filter_statement))
+            action, statement.ToStatement()))
 
     print ('%s audience segment populated' %
            populated_audience_segments[0]['numChanges'])

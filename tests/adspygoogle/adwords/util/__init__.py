@@ -64,6 +64,7 @@ def CreateTestCampaign(client):
       'operand': {
           'name': 'Campaign #%s' % Utils.GetUniqueName(),
           'status': 'PAUSED',
+          'displaySelect': 'false',
           'biddingStrategyConfiguration': {
               'biddingStrategyType': 'MANUAL_CPC',
               'biddingScheme': {
@@ -71,7 +72,7 @@ def CreateTestCampaign(client):
                   'enhancedCpcEnabled': 'false'
               }
           },
-          'advertisingChannelType': 'SEARCH',
+          'advertisingChannelType': 'DISPLAY',
           'budget': {
               'budgetId': CreateTestBudget(client)
           },

@@ -31,7 +31,7 @@ from adspygoogle.common.Errors import MissingPackageError
 LIB_HOME = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 LIB_NAME = 'DoubleClick for Advertisers API Python Client Library'
 LIB_SHORT_NAME = 'DfaApi-Python'
-LIB_URL = 'https://github.com/googleads/googleads-python-lib/'
+LIB_URL = 'https://github.com/googleads/googleads-python-legacy-lib/'
 LIB_AUTHOR = 'Joseph DiLallo'
 LIB_AUTHOR_EMAIL = 'api.jdilallo@gmail.com'
 LIB_VERSION = '2.4.1'

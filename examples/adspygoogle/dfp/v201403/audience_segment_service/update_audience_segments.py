@@ -32,6 +32,7 @@ sys.path.insert(0, os.path.join('..', '..', '..', '..', '..'))
 
 # Import appropriate classes from the client library.
 from adspygoogle import DfpClient
+from adspygoogle.dfp import DfpUtils
 
 AUDIENCE_SEGMENT_ID = 'INSERT_AUDIENCE_SEGMENT_ID_HERE'
 
@@ -41,7 +42,7 @@ def main(client, audience_segment_id):
   audience_segment_service = client.GetService(
       'AudienceSegmentService', version='v201403')
 
-  # Specify bind value to filter on First Party Segments
+  # Create statement object to get the specified first party audience segment.
   values = (
       [{'key': 'type',
         'value': {
@@ -52,17 +53,14 @@ def main(client, audience_segment_id):
        {'key': 'audience_segment_id',
         'value': {
             'xsi_type': 'NumberValue',
-            'value': audience_segment_id 
+            'value': audience_segment_id
             }
        }])
-
-  # Create a statement to select first party audience segments.
-  filter_statement = {'query': ('WHERE Type = :type AND Id = '
-                                ':audience_segment_id LIMIT 1'),
-                      'values': values}
+  query = 'WHERE Type = :type AND Id = :audience_segment_id'
+  statement = DfpUtils.FilterStatement(query, values, 1)
 
   response = audience_segment_service.getAudienceSegmentsByStatement(
-      filter_statement)[0]
+      statement.ToStatement())[0]
 
   if 'results' in response:
     audience_segments = response['results']
@@ -70,7 +68,7 @@ def main(client, audience_segment_id):
     for audience_segment in audience_segments:
       print ('Audience segment with id \'%s\' and name \'%s\' will be updated.'
              % (audience_segment['id'], audience_segment['name']))
-  
+
       audience_segment['membershipExpirationDays'] = '180'
 
     updated_audience_segments = (
@@ -80,7 +78,7 @@ def main(client, audience_segment_id):
       print ('Audience segment with id \'%s\' and name \'%s\' was updated' %
              (updated_audience_segment['id'],
               updated_audience_segment['name']))
-  
+
   else:
     print 'No Results Found'
 

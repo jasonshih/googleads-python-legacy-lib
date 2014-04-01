@@ -35,10 +35,10 @@ try:
 except ImportError, e:
   warnings.warn('Can\'t import DfpClient: %s' % e)
 
-LIB_PYPI_VERSION = '1.1.9'
+LIB_PYPI_VERSION = '1.1.10'
 LIB_PYPI_NAME = 'Google Ads Python Client Library'
 LIB_PYPI_SHORT_NAME = 'adspygoogle'
-LIB_PYPI_URL = 'https://github.com/googleads/googleads-python-lib'
+LIB_PYPI_URL = 'https://github.com/googleads/googleads-python-legacy-lib'
 LIB_PYPI_AUTHOR = 'Joseph DiLallo'
 LIB_PYPI_AUTHOR_EMAIL = 'api.jdilallo@gmail.com'
 LIB_PYPI_SIG = GenerateLibSig(LIB_PYPI_SHORT_NAME, LIB_PYPI_VERSION)

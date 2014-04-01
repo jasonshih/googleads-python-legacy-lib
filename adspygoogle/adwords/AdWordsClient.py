@@ -388,39 +388,6 @@ class AdWordsClient(Client):
                                                   http_proxy=http_proxy)
     return service.CallRawMethod(soap_message)
 
-  def GetAdExtensionOverrideService(self, server='https://adwords.google.com',
-                                    version=None, http_proxy=None):
-    """Call API method in AdExtensionOverrideService.
-
-    Args:
-      [optional]
-      server: str API server to access for this API call. The only supported
-              server is currently 'https://adwords.google.com'.
-      version: str API version to use.
-      http_proxy: str HTTP proxy to use.
-
-    Returns:
-      GenericAdWordsService New instance of AdExtensionOverrideService object.
-    """
-    headers = self.__GetAuthCredentialsForAccessLevel()
-
-    if version is None:
-      version = DEFAULT_API_VERSION
-    if Utils.BoolTypeConvert(self._config['strict']):
-      AdWordsSanityCheck.ValidateServer(server, version)
-    AdWordsSanityCheck.ValidateService('AdExtensionOverrideService', version)
-
-    # Load additional configuration data.
-    op_config = {
-        'server': server,
-        'version': version,
-        'group': 'cm',
-        'default_group': 'cm',
-        'http_proxy': http_proxy
-    }
-    return GenericAdWordsService(headers, self._config, op_config, self.__lock,
-                                 self.__logger, 'AdExtensionOverrideService')
-
   def GetAdGroupAdService(self, server='https://adwords.google.com',
                           version=None, http_proxy=None):
     """Call API method in AdGroupAdService.
@@ -1542,39 +1509,6 @@ class AdWordsClient(Client):
     }
     return GenericAdWordsService(headers, self._config, op_config, self.__lock,
                                  self.__logger, 'TrafficEstimatorService')
-
-  def GetUserListService(self, server='https://adwords.google.com',
-                         version=None, http_proxy=None):
-    """Call API method in UserListService.
-
-    Args:
-      [optional]
-      server: str API server to access for this API call. The only supported
-              server is currently 'https://adwords.google.com'.
-      version: str API version to use.
-      http_proxy: str HTTP proxy to use.
-
-    Returns:
-      GenericAdWordsService New instance of UserListService object.
-    """
-    headers = self.__GetAuthCredentialsForAccessLevel()
-
-    if version is None:
-      version = DEFAULT_API_VERSION
-    if Utils.BoolTypeConvert(self._config['strict']):
-      AdWordsSanityCheck.ValidateServer(server, version)
-    AdWordsSanityCheck.ValidateService('UserListService', version)
-
-    # Load additional configuration data.
-    op_config = {
-        'server': server,
-        'version': version,
-        'group': 'cm',
-        'default_group': 'cm',
-        'http_proxy': http_proxy
-    }
-    return GenericAdWordsService(headers, self._config, op_config, self.__lock,
-                                 self.__logger, 'UserListService')
 
   def GetConversionTrackerService(self, server='https://adwords.google.com',
                                   version=None, http_proxy=None):

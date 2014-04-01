@@ -75,7 +75,7 @@ def main(client, campaign_id):
           }],
           'rhsOperand': [{
               'xsi_type': 'GeoTargetOperand',
-              'locations': [1015116]  # Miami, FL
+              'locations': ['1015116']  # Miami, FL
           }]
       },
   }
@@ -90,7 +90,7 @@ def main(client, campaign_id):
           }],
           'rhsOperand': [{
               'xsi_type': 'GeoTargetOperand',
-              'locations': [1015116]  # Miami, FL
+              'locations': ['1015116']  # Miami, FL
           }]
       }
   }

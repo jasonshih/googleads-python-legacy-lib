@@ -31,8 +31,7 @@ sys.path.insert(0, os.path.join('..', '..', '..', '..', '..'))
 
 # Import appropriate classes from the client library.
 from adspygoogle import DfpClient
-
-SUGGESTED_PAGE_LIMIT = 500
+from adspygoogle.dfp import DfpUtils
 
 
 def main(client):
@@ -40,34 +39,25 @@ def main(client):
   audience_segment_service = client.GetService(
       'AudienceSegmentService', version='v201403')
 
-  # Get all audience segments.
-  offset, result_set_size = 0, 0
+  # Create statement object to select all audience segments.
+  statement = DfpUtils.FilterStatement()
 
   while True:
-    # Create a statement to select audience segments.
-    filter_statement = {'query': 'LIMIT %s OFFSET %s' % (
-        SUGGESTED_PAGE_LIMIT, offset)}
-  
     response = audience_segment_service.getAudienceSegmentsByStatement(
-        filter_statement)[0]
+        statement.ToStatement())[0]
 
     if 'results' in response:
       segments = response['results']
-      result_set_size = len(segments)
-
+      # Display results.
       for segment in segments:
         print ('Audience segment with id \'%s\' and name '
                '\'%s\' of size %s was found.' %
                (segment['id'], segment['name'], segment['size']))
-  
-      offset += result_set_size
-      if result_set_size != SUGGESTED_PAGE_LIMIT:
-        break
-    elif offset == 0:
-      print 'No Results Found'
+      statement.IncreaseOffsetBy(DfpUtils.PAGE_LIMIT)
+    else:
       break
 
-  print 'Number of results found: %d' % offset
+  print 'Number of results found: %d' % response['totalResultSetSize']
 
 if __name__ == '__main__':
   # Initialize client object.

@@ -21,8 +21,6 @@ __author__ = 'api.sgrinberg@gmail.com (Stan Grinberg)'
 from adspygoogle.common.Errors import ValidationError
 
 DEPRECATED_AFTER = {
-    'UserListService': 'v201306',
-    'AdExtensionOverrideService': 'v201306',
     'CampaignSharedSetService': 'v201309',
     'SharedCriterionService': 'v201309',
     'SharedSetService': 'v201309',
@@ -30,7 +28,6 @@ DEPRECATED_AFTER = {
 
 # A map of the supported servers for each version.
 _VERSION_SERVER_MAP = {
-    'v201306': ('https://adwords.google.com',),
     'v201309': ('https://adwords.google.com',),
     'v201402': ('https://adwords.google.com',),
 }

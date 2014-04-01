@@ -33,7 +33,7 @@ from adspygoogle.common.Errors import MissingPackageError
 LIB_HOME = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 LIB_NAME = 'DFP API Python Client Library'
 LIB_SHORT_NAME = 'DfpApi-Python'
-LIB_URL = 'https://github.com/googleads/googleads-python-lib/'
+LIB_URL = 'https://github.com/googleads/googleads-python-legacy-lib/'
 LIB_AUTHOR = 'Nicholas Chen'
 LIB_VERSION = '9.11.1'
 LIB_MIN_COMMON_VERSION = '3.1.1'

@@ -1,18 +1,18 @@
 # Notice: A Newer Library Is Available
 
-A newer library named `googleads` is now available, complete with Python 3 
+A newer library named `googleads` is now available, complete with Python 3
 support. You can read more about it here:
 * [The release announcement](http://googleadsdeveloper.blogspot.com/2014/03/the-ads-apis-python-client-library.html)
-* [googleads github page](https://github.com/googleads/googleads-python-lib)
+* [The googleads github page](https://github.com/googleads/googleads-python-lib)
 * [Migrating from adspygoogle to googleads](https://github.com/googleads/googleads-python-lib/wiki/Migrating-from-adspygoogle-to-googleads)
 
 
 #The Google Ads APIs Python Client Libraries
 
 
-This client library simplifies accessing Google's SOAP Ads APIs - AdWords, 
-DoubleClick Ad Exchange SOAP, DoubleClick for Advertisers, and DoubleClick for 
-Publishers. The library provides easy ways to store your authentication 
+This client library simplifies accessing Google's SOAP Ads APIs - AdWords,
+DoubleClick Ad Exchange SOAP, DoubleClick for Advertisers, and DoubleClick for
+Publishers. The library provides easy ways to store your authentication
 credentials and log SOAP interactions. It also contains example code to help you
 get started integrating with our APIs.
 
@@ -38,7 +38,7 @@ the examples folder.
 ##Where do I submit bug reports and/or feature requests?
 
 Use the issue tracker at:
-  https://github.com/googleads/google-api-ads-python/issues
+  https://github.com/googleads/googleads-python-legacy-lib/issues
 
 Make sure to subscribe to our Google Plus page for API change announcements and
 other news:
