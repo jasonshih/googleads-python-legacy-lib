@@ -37,7 +37,7 @@ THRESHOLD_NUMBER_OF_REQUESTS = '50'
 def main(client):
     # Initialize appropriate service.
   suggested_ad_unit_service = client.GetService(
-      'SuggestedAdUnitService', version='v201403')
+      'SuggestedAdUnitService', version='v201405')
 
   values = [{
       'key': 'numRequests',

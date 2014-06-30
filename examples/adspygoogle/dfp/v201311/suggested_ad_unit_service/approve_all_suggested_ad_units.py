@@ -71,7 +71,6 @@ def main(client):
           statement.ToStatement())[0]
       if result and int(result['numChanges']) > 0:
         num_approved_suggested_ad_units += int(result['numChanges'])
-      statement.IncreaseOffsetBy(DfpUtils.PAGE_LIMIT)
     else:
       break
 
