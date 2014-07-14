@@ -17,7 +17,7 @@
 """This example gets all campaigns with AWQL. To add a campaign, run
 add_campaign.py.
 
-Tags: CampaignService.get
+Tags: CampaignService.query
 """
 
 __author__ = 'api.kwinter@gmail.com (Kevin Winter)'

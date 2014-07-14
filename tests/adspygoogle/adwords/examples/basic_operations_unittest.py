@@ -24,36 +24,36 @@ sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import time
 import unittest
 
-from examples.adspygoogle.adwords.v201402.basic_operations import add_ad_groups
-from examples.adspygoogle.adwords.v201402.basic_operations import add_campaigns
-from examples.adspygoogle.adwords.v201402.basic_operations import add_keywords
-from examples.adspygoogle.adwords.v201402.basic_operations import add_text_ads
-from examples.adspygoogle.adwords.v201402.basic_operations import delete_ad
-from examples.adspygoogle.adwords.v201402.basic_operations import delete_ad_group
-from examples.adspygoogle.adwords.v201402.basic_operations import delete_campaign
-from examples.adspygoogle.adwords.v201402.basic_operations import delete_keyword
-from examples.adspygoogle.adwords.v201402.basic_operations import get_ad_groups
-from examples.adspygoogle.adwords.v201402.basic_operations import get_campaigns
-from examples.adspygoogle.adwords.v201402.basic_operations import get_campaigns_with_awql
-from examples.adspygoogle.adwords.v201402.basic_operations import get_keywords
-from examples.adspygoogle.adwords.v201402.basic_operations import get_text_ads
-from examples.adspygoogle.adwords.v201402.basic_operations import pause_ad
-from examples.adspygoogle.adwords.v201402.basic_operations import update_ad_group
-from examples.adspygoogle.adwords.v201402.basic_operations import update_campaign
-from examples.adspygoogle.adwords.v201402.basic_operations import update_keyword
+from examples.adspygoogle.adwords.v201406.basic_operations import add_ad_groups
+from examples.adspygoogle.adwords.v201406.basic_operations import add_campaigns
+from examples.adspygoogle.adwords.v201406.basic_operations import add_keywords
+from examples.adspygoogle.adwords.v201406.basic_operations import add_text_ads
+from examples.adspygoogle.adwords.v201406.basic_operations import remove_ad
+from examples.adspygoogle.adwords.v201406.basic_operations import remove_ad_group
+from examples.adspygoogle.adwords.v201406.basic_operations import remove_campaign
+from examples.adspygoogle.adwords.v201406.basic_operations import remove_keyword
+from examples.adspygoogle.adwords.v201406.basic_operations import get_ad_groups
+from examples.adspygoogle.adwords.v201406.basic_operations import get_campaigns
+from examples.adspygoogle.adwords.v201406.basic_operations import get_campaigns_with_awql
+from examples.adspygoogle.adwords.v201406.basic_operations import get_keywords
+from examples.adspygoogle.adwords.v201406.basic_operations import get_text_ads
+from examples.adspygoogle.adwords.v201406.basic_operations import pause_ad
+from examples.adspygoogle.adwords.v201406.basic_operations import update_ad_group
+from examples.adspygoogle.adwords.v201406.basic_operations import update_campaign
+from examples.adspygoogle.adwords.v201406.basic_operations import update_keyword
 from tests.adspygoogle.adwords import client
-from tests.adspygoogle.adwords import SERVER_V201402
-from tests.adspygoogle.adwords import TEST_VERSION_V201402
+from tests.adspygoogle.adwords import SERVER_V201406
+from tests.adspygoogle.adwords import TEST_VERSION_V201406
 from tests.adspygoogle.adwords import util
-from tests.adspygoogle.adwords import VERSION_V201402
+from tests.adspygoogle.adwords import VERSION_V201406
 
 
 class BasicOperations(unittest.TestCase):
 
   """Unittest suite for Account Management code examples."""
 
-  SERVER = SERVER_V201402
-  VERSION = VERSION_V201402
+  SERVER = SERVER_V201406
+  VERSION = VERSION_V201406
   client.debug = False
   loaded = False
 
@@ -127,24 +127,24 @@ class BasicOperations(unittest.TestCase):
                   self.__class__.ad_id)
 
   def testZDeleteAd(self):
-    """Tests whether we can delete an ad."""
-    delete_ad.main(client, self.__class__.ad_group_id,
+    """Tests whether we can remove an ad."""
+    remove_ad.main(client, self.__class__.ad_group_id,
                    self.__class__.ad_id)
 
   def testZDeleteKeyword(self):
-    """Tests whether we can delete a keyword."""
-    delete_keyword.main(client, self.__class__.ad_group_id,
+    """Tests whether we can remove a keyword."""
+    remove_keyword.main(client, self.__class__.ad_group_id,
                         self.__class__.keyword_id)
 
-  def testZDeleteAdGroup(self):
-    """Tests whether we can delete an ad group."""
-    delete_ad_group.main(client, self.__class__.ad_group_id)
+  def testZZDeleteAdGroup(self):
+    """Tests whether we can remove an ad group."""
+    remove_ad_group.main(client, self.__class__.ad_group_id)
 
-  def testZDeleteCampaign(self):
-    """Tests whether we can delete a campaign."""
-    delete_campaign.main(client, self.__class__.campaign_id)
+  def testZZDeleteCampaign(self):
+    """Tests whether we can remove a campaign."""
+    remove_campaign.main(client, self.__class__.campaign_id)
 
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201402:
+  if TEST_VERSION_V201406:
     unittest.main()

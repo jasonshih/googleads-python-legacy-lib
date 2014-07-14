@@ -23,24 +23,25 @@ import sys
 sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import unittest
 
-from examples.adspygoogle.adwords.v201402.advanced_operations import add_ad_group_bid_modifier
-from examples.adspygoogle.adwords.v201402.advanced_operations import add_click_to_download_ad
-from examples.adspygoogle.adwords.v201402.advanced_operations import add_site_links
-from examples.adspygoogle.adwords.v201402.advanced_operations import create_shared_bidding_strategies
-from examples.adspygoogle.adwords.v201402.advanced_operations import get_ad_group_bid_modifier
+from examples.adspygoogle.adwords.v201406.advanced_operations import add_ad_group_bid_modifier
+from examples.adspygoogle.adwords.v201406.advanced_operations import add_click_to_download_ad
+from examples.adspygoogle.adwords.v201406.advanced_operations import add_site_links
+from examples.adspygoogle.adwords.v201406.advanced_operations import add_text_ad_with_upgraded_urls
+from examples.adspygoogle.adwords.v201406.advanced_operations import get_ad_group_bid_modifier
+from examples.adspygoogle.adwords.v201406.advanced_operations import use_shared_bidding_strategy
 from tests.adspygoogle.adwords import client
 from tests.adspygoogle.adwords import util
-from tests.adspygoogle.adwords import SERVER_V201402
-from tests.adspygoogle.adwords import TEST_VERSION_V201402
-from tests.adspygoogle.adwords import VERSION_V201402
+from tests.adspygoogle.adwords import SERVER_V201406
+from tests.adspygoogle.adwords import TEST_VERSION_V201406
+from tests.adspygoogle.adwords import VERSION_V201406
 
 
 class AdvancedOperations(unittest.TestCase):
 
   """Unittest suite for Advanced Operations code examples."""
 
-  SERVER = SERVER_V201402
-  VERSION = VERSION_V201402
+  SERVER = SERVER_V201406
+  VERSION = VERSION_V201406
   client.debug = False
   loaded = False
 
@@ -50,6 +51,10 @@ class AdvancedOperations(unittest.TestCase):
       self.campaign_id = util.CreateTestCampaign(client)
       self.ad_group_id = util.CreateTestAdGroup(client, self.campaign_id)
 
+  def testAddAndRetrieveAdGroupBidModifier(self):
+    add_ad_group_bid_modifier.main(client, self.ad_group_id, '1.5')
+    get_ad_group_bid_modifier.main(client)
+
   def testAddClickToDownloadAd(self):
     """Tests whether we can create an account."""
     add_click_to_download_ad.main(client, self.ad_group_id)
@@ -58,14 +63,14 @@ class AdvancedOperations(unittest.TestCase):
     """Test whether we can get account alerts."""
     add_site_links.main(client, self.campaign_id)
 
-  def testAddAndRetrieveAdGroupBidModifier(self):
-    add_ad_group_bid_modifier.main(client, self.ad_group_id, '1.5')
-    get_ad_group_bid_modifier.main(client)
+  def testAddTextAdWithUpgradedUrls(self):
+    """Test whether we can add a text ad using upgraded urls"""
+    add_text_ad_with_upgraded_urls.main(client, self.ad_group_id)
 
-  def testCreateSharedBiddingStrategies(self):
-    create_shared_bidding_strategies.main(client, None)
+  def testUseSharedBiddingStrategy(self):
+    use_shared_bidding_strategy.main(client, None)
 
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201402:
+  if TEST_VERSION_V201406:
     unittest.main()

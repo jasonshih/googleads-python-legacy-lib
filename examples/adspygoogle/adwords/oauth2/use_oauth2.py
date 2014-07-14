@@ -58,7 +58,7 @@ def main(email, client_customer_id, oauth2_client_id,
       client_id=oauth2_client_id,
       client_secret=oauth2_client_secret,
       # Scope is the server address with '/api/adwords' appended.
-      scope='https://adwords.google.com/api/adwords',
+      scope='https://www.googleapis.com/auth/adwords',
       user_agent='oauth2 code example',
       redirect_uri='urn:ietf:wg:oauth:2.0:oob')
 

@@ -24,28 +24,29 @@ sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import time
 import unittest
 
-from examples.adspygoogle.adwords.v201402.campaign_management import add_experiment
-from examples.adspygoogle.adwords.v201402.campaign_management import add_keywords_in_bulk
-from examples.adspygoogle.adwords.v201402.campaign_management import add_location_extension
-from examples.adspygoogle.adwords.v201402.campaign_management import get_all_disapproved_ads
-from examples.adspygoogle.adwords.v201402.campaign_management import get_all_disapproved_ads_with_awql
-from examples.adspygoogle.adwords.v201402.campaign_management import promote_experiment
-from examples.adspygoogle.adwords.v201402.campaign_management import set_ad_parameters
-from examples.adspygoogle.adwords.v201402.campaign_management import validate_text_ad
+from examples.adspygoogle.adwords.v201406.campaign_management import add_campaign_labels
+from examples.adspygoogle.adwords.v201406.campaign_management import add_experiment
+from examples.adspygoogle.adwords.v201406.campaign_management import add_keywords_in_bulk
+from examples.adspygoogle.adwords.v201406.campaign_management import add_location_extension
+from examples.adspygoogle.adwords.v201406.campaign_management import get_all_disapproved_ads
+from examples.adspygoogle.adwords.v201406.campaign_management import get_all_disapproved_ads_with_awql
+from examples.adspygoogle.adwords.v201406.campaign_management import get_campaigns_by_label
+from examples.adspygoogle.adwords.v201406.campaign_management import promote_experiment
+from examples.adspygoogle.adwords.v201406.campaign_management import set_ad_parameters
+from examples.adspygoogle.adwords.v201406.campaign_management import validate_text_ad
 from tests.adspygoogle.adwords import client
 from tests.adspygoogle.adwords import HTTP_PROXY
-from tests.adspygoogle.adwords import SERVER_V201402
-from tests.adspygoogle.adwords import TEST_VERSION_V201402
+from tests.adspygoogle.adwords import SERVER_V201406
+from tests.adspygoogle.adwords import TEST_VERSION_V201406
 from tests.adspygoogle.adwords import util
-from tests.adspygoogle.adwords import VERSION_V201402
+from tests.adspygoogle.adwords import VERSION_V201406
 
 
 class CampaignManagement(unittest.TestCase):
-
   """Unittest suite for Campaign Management code examples."""
 
-  SERVER = SERVER_V201402
-  VERSION = VERSION_V201402
+  SERVER = SERVER_V201406
+  VERSION = VERSION_V201406
   client.debug = False
   loaded = False
 
@@ -54,28 +55,35 @@ class CampaignManagement(unittest.TestCase):
     time.sleep(3)
     client.use_mcc = False
     if not self.__class__.loaded:
-      self.__class__.campaign_id = util.CreateTestCampaign(client)
+      self.__class__.campaign_id1 = util.CreateTestCampaign(client)
+      self.__class__.campaign_id2 = util.CreateTestCampaign(client)
       self.__class__.ad_group_id = util.CreateTestAdGroup(
-          client, self.__class__.campaign_id)
+          client, self.__class__.campaign_id1)
       self.__class__.ad_id = util.CreateTestAd(client,
                                                self.__class__.ad_group_id)
       self.__class__.keyword_id = util.CreateTestKeyword(
           client, self.__class__.ad_group_id)
-
+      self.__class__.label_id = util.CreateTestLabel(client)
       self.__class__.extension_id = util.CreateTestLocationExtension(
-          client, self.__class__.campaign_id)
+          client, self.__class__.campaign_id1)
       self.__class__.loaded = True
 
   def tearDown(self):
     client.validate_only = False
 
+  def testAddCampaignLabels(self):
+    """ Test whether can add labels to campaigns."""
+    add_campaign_labels.main(client, self.__class__.campaign_id1,
+                             self.__class__.campaign_id2,
+                             self.__class__.label_id)
+
   def testAddExperiment(self):
     """Test whether we can add an experiment."""
-    add_experiment.main(client, self.__class__.campaign_id,
+    add_experiment.main(client, self.__class__.campaign_id1,
                         self.__class__.ad_group_id)
     # Obtain the experiment ID so we can promote it later.
     self.__class__.experiment_id = util.GetExperimentIdForCampaign(
-        client, self.__class__.campaign_id)
+        client, self.__class__.campaign_id1)
 
   def testAddKeywordsInBulk(self):
     """Test whether we can add keywords in bulk."""
@@ -83,15 +91,19 @@ class CampaignManagement(unittest.TestCase):
 
   def testAddLocationExtension(self):
     """Test whether we can add a location extension."""
-    add_location_extension.main(client, self.__class__.campaign_id)
+    add_location_extension.main(client, self.__class__.campaign_id1)
 
   def testGetAllDisapprovedAds(self):
     """Test whether we can get all disapproved ads."""
-    get_all_disapproved_ads.main(client, self.__class__.campaign_id)
+    get_all_disapproved_ads.main(client, self.__class__.campaign_id1)
 
   def testGetAllDisapprovedAdsWithAwql(self):
     """Test whether we can get all disapproved ads with AWQL."""
-    get_all_disapproved_ads_with_awql.main(client, self.__class__.campaign_id)
+    get_all_disapproved_ads_with_awql.main(client, self.__class__.campaign_id1)
+
+  def testGetCampaignsByLabel(self):
+    """Test whether we can retrieve campaigns by their label."""
+    get_campaigns_by_label.main(client, self.__class__.label_id)
 
   def testPromoteExperiment(self):
     """Test whether we can promote an experiment."""
@@ -108,5 +120,5 @@ class CampaignManagement(unittest.TestCase):
 
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201402:
+  if TEST_VERSION_V201406:
     unittest.main()

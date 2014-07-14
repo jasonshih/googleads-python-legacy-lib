@@ -20,16 +20,21 @@ __author__ = 'api.sgrinberg@gmail.com (Stan Grinberg)'
 
 from adspygoogle.common.Errors import ValidationError
 
-DEPRECATED_AFTER = {
-    'CampaignSharedSetService': 'v201309',
-    'SharedCriterionService': 'v201309',
-    'SharedSetService': 'v201309',
+# Identifies Services that have been deprecated after the given version.
+DEPRECATED_AFTER = {}
+
+# For the special case where a Service is brought back after being deprecated;
+# allows you to specify versions where the Service is deprecated.
+DEPRECATED_IN = {
+    'CampaignSharedSetService': ['v201402'],
+    'SharedCriterionService': ['v201402'],
 }
 
 # A map of the supported servers for each version.
 _VERSION_SERVER_MAP = {
     'v201309': ('https://adwords.google.com',),
     'v201402': ('https://adwords.google.com',),
+    'v201406': ('https://adwords.google.com',),
 }
 
 
@@ -62,5 +67,8 @@ def ValidateService(service, version):
     service: str Service being requested.
     version: str Version being requested.
   """
+  if service in DEPRECATED_IN and version in DEPRECATED_IN[service]:
+    raise ValidationError('%s is not available in %s' % (service, version))
+
   if service in DEPRECATED_AFTER and version > DEPRECATED_AFTER[service]:
     raise ValidationError('%s is not available in %s' % (service, version))

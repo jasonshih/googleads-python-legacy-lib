@@ -43,7 +43,7 @@ def main(client, path):
   report_query = ('SELECT CampaignId, AdGroupId, Id, Criteria, CriteriaType, '
                   'Impressions, Clicks, Cost '
                   'FROM CRITERIA_PERFORMANCE_REPORT '
-                  'WHERE Status IN [ACTIVE, PAUSED] '
+                  'WHERE Status IN [ENABLED, PAUSED] '
                   'DURING LAST_7_DAYS')
 
   file_path = report_downloader.DownloadReportWithAwql(report_query,

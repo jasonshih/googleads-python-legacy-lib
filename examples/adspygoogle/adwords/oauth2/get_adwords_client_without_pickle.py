@@ -26,7 +26,7 @@ from oauth2client import client
 CLIENT_CUSTOMER_ID = 'INSERT_CLIENT_CUSTOMER_ID_HERE'
 CLIENT_ID = 'INSERT_CLIENT_ID_HERE'
 CLIENT_SECRET = 'INSERT_CLIENT_SECRET_HERE'
-SCOPE = 'https://adwords.google.com/api/adwords'
+SCOPE = 'https://www.googleapis.com/auth/adwords'
 USER_AGENT = 'INSERT_USER_AGENT_HERE'
 DEVELOPER_TOKEN = 'INSERT_DEVELOPER_TOKEN_HERE'
 

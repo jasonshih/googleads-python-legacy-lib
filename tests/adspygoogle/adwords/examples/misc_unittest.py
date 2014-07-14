@@ -24,20 +24,20 @@ sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import time
 import unittest
 
-from examples.adspygoogle.adwords.v201402.misc import get_all_images_and_videos
-from examples.adspygoogle.adwords.v201402.misc import upload_image
+from examples.adspygoogle.adwords.v201406.misc import get_all_images_and_videos
+from examples.adspygoogle.adwords.v201406.misc import upload_image
 from tests.adspygoogle.adwords import client
-from tests.adspygoogle.adwords import SERVER_V201402
-from tests.adspygoogle.adwords import TEST_VERSION_V201402
-from tests.adspygoogle.adwords import VERSION_V201402
+from tests.adspygoogle.adwords import SERVER_V201406
+from tests.adspygoogle.adwords import TEST_VERSION_V201406
+from tests.adspygoogle.adwords import VERSION_V201406
 
 
 class Misc(unittest.TestCase):
 
   """Unittest suite for Misc code examples."""
 
-  SERVER = SERVER_V201402
-  VERSION = VERSION_V201402
+  SERVER = SERVER_V201406
+  VERSION = VERSION_V201406
   client.debug = False
   loaded = False
 
@@ -61,5 +61,5 @@ class Misc(unittest.TestCase):
 
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201402:
+  if TEST_VERSION_V201406:
     unittest.main()

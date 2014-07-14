@@ -24,27 +24,27 @@ import time
 import unittest
 sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 
-from examples.adspygoogle.adxbuyer.v201402.basic_operations import add_ad_groups
-from examples.adspygoogle.adxbuyer.v201402.basic_operations import add_campaigns
-from examples.adspygoogle.adxbuyer.v201402.basic_operations import add_placements
-from examples.adspygoogle.adxbuyer.v201402.basic_operations import add_third_party_redirect_ad
-from examples.adspygoogle.adxbuyer.v201402.basic_operations import delete_placement
-from examples.adspygoogle.adxbuyer.v201402.basic_operations import get_placements
-from examples.adspygoogle.adxbuyer.v201402.basic_operations import get_third_party_redirect_ads
-from examples.adspygoogle.adxbuyer.v201402.basic_operations import update_placement
+from examples.adspygoogle.adxbuyer.v201406.basic_operations import add_ad_groups
+from examples.adspygoogle.adxbuyer.v201406.basic_operations import add_campaigns
+from examples.adspygoogle.adxbuyer.v201406.basic_operations import add_placements
+from examples.adspygoogle.adxbuyer.v201406.basic_operations import add_third_party_redirect_ad
+from examples.adspygoogle.adxbuyer.v201406.basic_operations import remove_placement
+from examples.adspygoogle.adxbuyer.v201406.basic_operations import get_placements
+from examples.adspygoogle.adxbuyer.v201406.basic_operations import get_third_party_redirect_ads
+from examples.adspygoogle.adxbuyer.v201406.basic_operations import update_placement
 from tests.adspygoogle.adwords import client
-from tests.adspygoogle.adwords import SERVER_V201402
-from tests.adspygoogle.adwords import TEST_VERSION_V201402
+from tests.adspygoogle.adwords import SERVER_V201406
+from tests.adspygoogle.adwords import TEST_VERSION_V201406
 from tests.adspygoogle.adwords import util
-from tests.adspygoogle.adwords import VERSION_V201402
+from tests.adspygoogle.adwords import VERSION_V201406
 
 
 class BasicOperations(unittest.TestCase):
 
   """Unittest suite for Account Management code examples."""
 
-  SERVER = SERVER_V201402
-  VERSION = VERSION_V201402
+  SERVER = SERVER_V201406
+  VERSION = VERSION_V201406
   client.debug = False
   loaded = False
 
@@ -92,11 +92,11 @@ class BasicOperations(unittest.TestCase):
     update_placement.main(client, self.__class__.ad_group_id,
                           self.__class__.placement_id)
 
-  def testZDeletePlacement(self):
+  def testZRemovePlacement(self):
     """Tests whether we can delete a placement."""
-    delete_placement.main(client, self.__class__.ad_group_id,
+    remove_placement.main(client, self.__class__.ad_group_id,
                           self.__class__.placement_id)
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201402:
+  if TEST_VERSION_V201406:
     unittest.main()

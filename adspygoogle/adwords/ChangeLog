@@ -1,3 +1,10 @@
+15.15.0
+- Added support for v201406.
+- Added CampaignSharedSetService, LabelService, SharedCriterionService, and
+  SharedSetService.
+- Updated AdWords OAuth 2.0 scope.
+  See: https://developers.google.com/adwords/api/docs/guides/authentication.
+
 15.14.0
 - Removed support for v201306.
 

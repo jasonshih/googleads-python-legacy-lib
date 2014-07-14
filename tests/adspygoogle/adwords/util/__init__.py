@@ -327,6 +327,32 @@ def CreateTestKeyword(client, ad_group_id):
   return criteria[0]['value'][0]['criterion']['id']
 
 
+def CreateTestLabel(client):
+  """Creates a Label for running tests with.
+
+  Args:
+    client: AdWordsClient client to obtain services from.
+
+  Returns:
+    int: LabelId
+  """
+  label_service = client.GetLabelService()
+
+  operations = [
+      {
+          'operator': 'ADD',
+          'operand': {
+              'xsi_type': 'TextLabel',
+              'name': 'Test Label - %s' % Utils.GetUniqueName(),
+          }
+      }
+  ]
+
+  labels = label_service.Mutate(operations)[0]
+  label = labels['value'][0]
+  return label['id']
+
+
 def CreateTestPlacement(client, ad_group_id):
   """Creates a Placement for running tests with.
 

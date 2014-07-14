@@ -23,21 +23,21 @@ import sys
 sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import unittest
 
-from examples.adspygoogle.adwords.v201402.reporting import download_criteria_report
-from examples.adspygoogle.adwords.v201402.reporting import download_criteria_report_with_awql
-from examples.adspygoogle.adwords.v201402.reporting import get_report_fields
+from examples.adspygoogle.adwords.v201406.reporting import download_criteria_report
+from examples.adspygoogle.adwords.v201406.reporting import download_criteria_report_with_awql
+from examples.adspygoogle.adwords.v201406.reporting import get_report_fields
 from tests.adspygoogle.adwords import client
-from tests.adspygoogle.adwords import SERVER_V201402
-from tests.adspygoogle.adwords import TEST_VERSION_V201402
-from tests.adspygoogle.adwords import VERSION_V201402
+from tests.adspygoogle.adwords import SERVER_V201406
+from tests.adspygoogle.adwords import TEST_VERSION_V201406
+from tests.adspygoogle.adwords import VERSION_V201406
 
 
 class Reporting(unittest.TestCase):
 
   """Unittest suite for Remarketing code examples."""
 
-  SERVER = SERVER_V201402
-  VERSION = VERSION_V201402
+  SERVER = SERVER_V201406
+  VERSION = VERSION_V201406
   client.debug = False
 
   def setUp(self):
@@ -46,11 +46,11 @@ class Reporting(unittest.TestCase):
 
   def testDownloadCriteriaReport(self):
     """Tests whether we can download a criteria report."""
-    download_criteria_report.main(client, '/tmp/report.rpt')
+    download_criteria_report.main(client)
 
   def testDownloadCriteriaReportWithAwql(self):
     """Tests whether we can download a criteria report with AWQL."""
-    download_criteria_report_with_awql.main(client, '/tmp/report.rpt')
+    download_criteria_report_with_awql.main(client)
 
   def testGetReportFields(self):
     """Test whether we can get report fields."""
@@ -58,5 +58,5 @@ class Reporting(unittest.TestCase):
 
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201402:
+  if TEST_VERSION_V201406:
     unittest.main()

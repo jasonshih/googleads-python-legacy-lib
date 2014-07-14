@@ -25,6 +25,7 @@ __author__ = 'api.kwinter@gmail.com (Kevin Winter)'
 
 import os
 import sys
+import tempfile
 sys.path.insert(0, os.path.join('..', '..', '..', '..', '..'))
 
 # Import appropriate classes from the client library.
@@ -53,9 +54,11 @@ def main(client, path):
       'includeZeroImpressions': 'false'
   }
 
-  file_path = report_downloader.DownloadReport(report, file_path=path)
+  temp_file = tempfile.NamedTemporaryFile('wb', delete=False)
+  file_path = report_downloader.DownloadReport(report, file_path=temp_file.name)
+  temp_file.close()
 
-  print 'Report was downloaded to \'%s\'.' % file_path
+  print 'Report was downloaded to \'%s\'.' % temp_file.name
 
 
 if __name__ == '__main__':

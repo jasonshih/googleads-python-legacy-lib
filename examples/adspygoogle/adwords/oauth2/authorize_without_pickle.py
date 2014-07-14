@@ -30,7 +30,7 @@ from oauth2client import client
 
 CLIENT_ID = 'INSERT_CLIENT_ID_HERE'
 CLIENT_SECRET = 'INSERT_CLIENT_SECRET_HERE'
-ADWORDS_SCOPE = 'https://adwords.google.com/api/adwords'
+ADWORDS_SCOPE = 'https://www.googleapis.com/auth/adwords'
 
 
 def main(client_id, client_secret, scope):

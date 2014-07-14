@@ -58,7 +58,7 @@ def main(client, campaign_id, ad_group_id):
           'queryPercentage': '10',
           'startDateTime': tomorrow.strftime('%Y%m%d %H%M%S'),
           # Optional fields.
-          'status': 'ACTIVE',
+          'status': 'ENABLED',
           'endDateTime': thirty_days.strftime('%Y%m%d %H%M%S')
       }
   }]
