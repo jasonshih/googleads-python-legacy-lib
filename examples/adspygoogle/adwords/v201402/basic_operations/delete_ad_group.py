@@ -14,15 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example deletes a campaign by setting the status to 'DELETED'. To get
-campaigns, run get_campaigns.py.
+"""This example deletes an ad group by setting the status to 'DELETED'. To get
+ad groups, run get_ad_groups.py.
 
-Tags: CampaignService.mutate
+Tags: AdGroupService.mutate
 """
 
 __author__ = 'api.kwinter@gmail.com (Kevin Winter)'
 
-from datetime import datetime
 import os
 import sys
 sys.path.insert(0, os.path.join('..', '..', '..', '..', '..'))
@@ -31,31 +30,27 @@ sys.path.insert(0, os.path.join('..', '..', '..', '..', '..'))
 from adspygoogle import AdWordsClient
 
 
-campaign_id = 'INSERT_CAMPAIGN_ID_HERE'
+ad_group_id = 'INSERT_AD_GROUP_ID_HERE'
 
 
-def main(client, campaign_id):
+def main(client, ad_group_id):
   # Initialize appropriate service.
-  campaign_service = client.GetCampaignService(version='v201309')
+  ad_group_service = client.GetAdGroupService(version='v201402')
 
-  # Construct operations and delete campaign.
+  # Construct operations and delete ad group.
   operations = [{
       'operator': 'SET',
       'operand': {
-          'id': campaign_id,
-          # We recommend including the original name when renaming before
-          # delete.
-          'name': ('Deleted on %s' %
-                   datetime.today().strftime('%Y%m%d %H:%M:%S.%f')),
+          'id': ad_group_id,
           'status': 'DELETED'
       }
   }]
-  result = campaign_service.Mutate(operations)[0]
+  result = ad_group_service.Mutate(operations)[0]
 
   # Display results.
-  for campaign in result['value']:
-    print ('Campaign with name \'%s\' and id \'%s\' was deleted.'
-           % (campaign['name'], campaign['id']))
+  for ad_group in result['value']:
+    print ('Ad group with name \'%s\' and id \'%s\' was deleted.'
+           % (ad_group['name'], ad_group['id']))
 
   print
   print ('Usage: %s units, %s operations' % (client.GetUnits(),
@@ -66,4 +61,4 @@ if __name__ == '__main__':
   # Initialize client object.
   client = AdWordsClient(path=os.path.join('..', '..', '..', '..', '..'))
 
-  main(client, campaign_id)
+  main(client, ad_group_id)

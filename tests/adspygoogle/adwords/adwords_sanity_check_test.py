@@ -31,7 +31,7 @@ class AdWordsSanityCheckTest(unittest.TestCase):
   """Tests for AdWordsSanityCheck."""
 
   def testValidateService_infoAllowed(self):
-    AdWordsSanityCheck.ValidateService('CampaignSharedSetService', 'v201309')
+    AdWordsSanityCheck.ValidateService('CampaignSharedSetService', 'v201406')
 
   def testValidateService_infoNotAllowed(self):
     self.assertRaises(ValidationError, AdWordsSanityCheck.ValidateService,

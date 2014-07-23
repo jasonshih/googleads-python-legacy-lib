@@ -1,3 +1,8 @@
+15.16.0:
+- Removed support for v201309.
+- AdGroups/Campaigns no longer renamed on remove/delete in examples, obsolete.
+- Error now thrown when returnMoneyInMicros is sent with v201406.
+
 15.15.0
 - Added support for v201406.
 - Added CampaignSharedSetService, LabelService, SharedCriterionService, and

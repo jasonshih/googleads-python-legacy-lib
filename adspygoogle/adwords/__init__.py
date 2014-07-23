@@ -34,7 +34,7 @@ LIB_SHORT_NAME = 'AwApi-Python'
 LIB_URL = 'https://github.com/googleads/googleads-python-legacy-lib'
 LIB_AUTHOR = 'Stan Grinberg'
 LIB_AUTHOR_EMAIL = 'api.sgrinberg@gmail.com'
-LIB_VERSION = '15.15.0'
+LIB_VERSION = '15.16.0'
 LIB_MIN_COMMON_VERSION = '3.1.1'
 LIB_SIG = GenerateLibSig(LIB_SHORT_NAME, LIB_VERSION)
 
@@ -44,7 +44,7 @@ if VERSION < LIB_MIN_COMMON_VERSION:
   raise MissingPackageError(msg)
 
 # Tuple of strings representing API versions.
-API_VERSIONS = ('v201309', 'v201402', 'v201406')
+API_VERSIONS = ('v201402', 'v201406')
 DEFAULT_API_VERSION = API_VERSIONS[-1]
 
 # Accepted combinations of headers which user has to provide. Either one of

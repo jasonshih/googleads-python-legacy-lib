@@ -22,7 +22,6 @@ Tags: CampaignService.mutate
 
 __author__ = 'api.kwinter@gmail.com (Kevin Winter)'
 
-from datetime import datetime
 import os
 import sys
 sys.path.insert(0, os.path.join('..', '..', '..', '..', '..'))
@@ -43,10 +42,6 @@ def main(client, campaign_id):
       'operator': 'SET',
       'operand': {
           'id': campaign_id,
-          # We recommend including the original name when renaming before
-          # delete.
-          'name': ('Deleted on %s' %
-                   datetime.today().strftime('%Y%m%d %H:%M:%S.%f')),
           'status': 'REMOVED'
       }
   }]

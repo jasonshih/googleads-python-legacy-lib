@@ -14,10 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example gets all ad groups for a given campaign. To add an ad group,
-run add_ad_group.py.
+"""This example deletes a campaign by setting the status to 'DELETED'. To get
+campaigns, run get_campaigns.py.
 
-Tags: AdGroupService.get
+Tags: CampaignService.mutate
 """
 
 __author__ = 'api.kwinter@gmail.com (Kevin Winter)'
@@ -30,45 +30,27 @@ sys.path.insert(0, os.path.join('..', '..', '..', '..', '..'))
 from adspygoogle import AdWordsClient
 
 
-PAGE_SIZE = 500
 campaign_id = 'INSERT_CAMPAIGN_ID_HERE'
 
 
 def main(client, campaign_id):
   # Initialize appropriate service.
-  ad_group_service = client.GetAdGroupService(version='v201309')
+  campaign_service = client.GetCampaignService(version='v201402')
 
-  # Construct selector and get all ad groups.
-  offset = 0
-  selector = {
-      'fields': ['Id', 'Name', 'Status'],
-      'predicates': [
-          {
-              'field': 'CampaignId',
-              'operator': 'EQUALS',
-              'values': [campaign_id]
-          }
-      ],
-      'paging': {
-          'startIndex': str(offset),
-          'numberResults': str(PAGE_SIZE)
+  # Construct operations and delete campaign.
+  operations = [{
+      'operator': 'SET',
+      'operand': {
+          'id': campaign_id,
+          'status': 'DELETED'
       }
-  }
-  more_pages = True
-  while more_pages:
-    page = ad_group_service.Get(selector)[0]
+  }]
+  result = campaign_service.Mutate(operations)[0]
 
-    # Display results.
-    if 'entries' in page:
-      for ad_group in page['entries']:
-        print ('Ad group with name \'%s\', id \'%s\' and status \'%s\' was '
-               'found.' % (ad_group['name'], ad_group['id'],
-                           ad_group['status']))
-    else:
-      print 'No ad groups were found.'
-    offset += PAGE_SIZE
-    selector['paging']['startIndex'] = str(offset)
-    more_pages = offset < int(page['totalNumEntries'])
+  # Display results.
+  for campaign in result['value']:
+    print ('Campaign with name \'%s\' and id \'%s\' was deleted.'
+           % (campaign['name'], campaign['id']))
 
   print
   print ('Usage: %s units, %s operations' % (client.GetUnits(),

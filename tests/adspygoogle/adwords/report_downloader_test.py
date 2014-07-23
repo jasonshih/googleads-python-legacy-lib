@@ -44,16 +44,24 @@ class ReportDownloaderTest(unittest.TestCase):
                                       'userAgent': 'USER AGENT',
                                       'developerToken': 'DEV TOKEN',
                                       'email': 'SOME@EMAIL.COM',
-                                      'password': 'shhhh it is a secret!'})
+                                      'password': 'shhhh it is a secret!',
+                                     })
       self.service = client.GetReportDownloader()
 
       credentials = OAuth2Credentials(
           'ACCESS_TOKEN', 'client_id', 'client_secret', 'refresh_token', None,
           'uri', 'user_agent')
-      client_oauth2 = AdWordsClient(headers={'oauth2credentials': credentials,
-                                             'userAgent': 'USER AGENT',
-                                             'developerToken': 'DEV TOKEN'})
+
+      self.oauth2_headers = {
+                              'oauth2credentials': credentials,
+                              'userAgent': 'USER AGENT',
+                              'developerToken': 'DEV TOKEN',
+                              'clientCustomerId': 'client customer id'
+                            }
+      client_oauth2 = AdWordsClient(self.oauth2_headers)
       self.service_oauth2 = client_oauth2.GetReportDownloader()
+      self.service_v201402 = client_oauth2.GetReportDownloader(
+          version='v201402')
 
   def _ThrowErrorFromMakeRequest(self, payload_contents):
     """A test helper function to mock receiving an error during __MakeRequest.
@@ -121,20 +129,6 @@ class ReportDownloaderTest(unittest.TestCase):
     self.service._ReportDownloader__CheckForXmlError(
         '400', 'This is not an error XML message')
 
-  def testGenerateHeaders_oAuth2(self):
-    expected_headers = {
-        'User-Agent': '%s,gzip' % 'USER AGENT',
-        'Authorization': 'Bearer ACCESS_TOKEN',
-        'returnMoneyInMicros': 'false',
-        'developerToken': 'DEV TOKEN',
-        'Content-Encoding': 'gzip',
-        'Accept-Encoding': 'gzip'
-    }
-
-    self.assertEqual(
-        expected_headers,
-        self.service_oauth2._ReportDownloader__GenerateHeaders(False))
-
   def testCheckAuthentication_usingOAuth_refresh(self):
     credentials = mock.Mock()
     self.service_oauth2._headers['oauth2credentials'] = credentials
@@ -191,6 +185,56 @@ class ReportDownloaderTest(unittest.TestCase):
       self.service._ReportDownloader__MakeRequest('url', payload='nothing')
     except KeyError, e:
       self.assertIs(exception1, e)
+
+  def testGenerateHeadersReturnMoneyInMicros_v201402(self):
+    """Tests that GenerateHeaders works with returnMoneyInMicros in v201402."""
+    expected_return_value = {
+        'Accept-Encoding': 'gzip',
+        'Content-Encoding': 'gzip',
+        'developerToken': 'DEV TOKEN',
+        'clientCustomerId': 'client customer id',
+        'returnMoneyInMicros': 'True',
+        'Authorization': 'Bearer ACCESS_TOKEN',
+        'User-Agent': ''.join('USER AGENT,gzip')
+    }
+
+    # Check that returnMoneyInMicros works when set to true.
+    expected_return_value['returnMoneyInMicros'] = 'True'
+    self.assertEqual(expected_return_value,
+        self.service_v201402._ReportDownloader__GenerateHeaders(True))
+
+    # Check that returnMoneyInMicros works when set to false.
+    expected_return_value['returnMoneyInMicros'] = 'False'
+    self.assertEqual(expected_return_value,
+        self.service_v201402._ReportDownloader__GenerateHeaders(False))
+
+    # Default returnMoneyInMicros value is not included in the headers.
+    del expected_return_value['returnMoneyInMicros']
+    self.assertEqual(expected_return_value,
+                     self.service_v201402._ReportDownloader__GenerateHeaders())
+
+  def testGenerateHeadersReturnMoneyInMicros_v201406(self):
+    """Tests that GenerateHeaders fails with returnMoneyInMicros in v201406."""
+    expected_return_value = {
+        'Accept-Encoding': 'gzip',
+        'Content-Encoding': 'gzip',
+        'developerToken': 'DEV TOKEN',
+        'clientCustomerId': 'client customer id',
+        'Authorization': 'Bearer ACCESS_TOKEN',
+        'User-Agent': ''.join('USER AGENT,gzip')
+    }
+
+    # Check that returnMoneyInMicros works when set to true.
+    self.assertRaises(AdWordsError,
+        self.service_oauth2._ReportDownloader__GenerateHeaders, True)
+
+    # Check that returnMoneyInMicros works when set to false.
+    self.assertRaises(AdWordsError,
+        self.service_oauth2._ReportDownloader__GenerateHeaders, False)
+
+    # Default returnMoneyInMicros value is not included in the headers.
+    self.assertEqual(expected_return_value,
+                     self.service_oauth2._ReportDownloader__GenerateHeaders())
 
 
 if __name__ == '__main__':

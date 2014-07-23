@@ -40,6 +40,7 @@ from adspygoogle.common.Errors import ValidationError
 from adspygoogle.common.Logger import Logger
 
 
+FINAL_RETURN_MONEY_IN_MICROS_VERSION = 'v201402'
 SERVICE_NAME = 'ReportDefinitionService'
 DOWNLOAD_URL_BASE = '/api/adwords/reportdownload'
 REPORT_ID='?__rd=%s'
@@ -268,7 +269,7 @@ class ReportDownloader(object):
       url.append(REPORT_ID % report_definition_id)
     return ''.join(url)
 
-  def __GenerateHeaders(self, return_micros):
+  def __GenerateHeaders(self, return_micros=None):
     """Generates the headers to use for the report download.
 
     Args:
@@ -290,7 +291,11 @@ class ReportDownloader(object):
                             self._headers['authToken'].strip()}))
 
     if return_micros is not None:
-      headers['returnMoneyInMicros'] = str(return_micros).lower()
+      if self._op_config['version'] == FINAL_RETURN_MONEY_IN_MICROS_VERSION:
+        headers['returnMoneyInMicros'] = str(return_micros)
+      else:
+        raise AdWordsError('returnMoneyInMicros isn\'t supported in this'
+                           ' version.')
 
     headers['developerToken'] = self._headers['developerToken']
     headers['User-Agent'] = self._headers['userAgent']

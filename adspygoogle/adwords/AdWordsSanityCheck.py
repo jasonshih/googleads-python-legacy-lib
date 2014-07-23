@@ -32,7 +32,6 @@ DEPRECATED_IN = {
 
 # A map of the supported servers for each version.
 _VERSION_SERVER_MAP = {
-    'v201309': ('https://adwords.google.com',),
     'v201402': ('https://adwords.google.com',),
     'v201406': ('https://adwords.google.com',),
 }
