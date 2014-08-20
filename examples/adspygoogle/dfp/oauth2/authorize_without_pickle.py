@@ -30,7 +30,7 @@ from oauth2client import client
 
 CLIENT_ID = 'INSERT_CLIENT_ID_HERE'
 CLIENT_SECRET = 'INSERT_CLIENT_SECRET_HERE'
-SCOPE = 'https://www.google.com/apis/ads/publisher'
+SCOPE = 'https://www.googleapis.com/auth/dfp'
 
 
 def main(application_name, client_id, client_secret, scope):

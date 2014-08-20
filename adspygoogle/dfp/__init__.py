@@ -16,9 +16,7 @@
 
 """Settings and configurations for the client library."""
 
-__author__ = ('Stan Grinberg',
-              'Vincent Tsao',
-              'Nicholas Chen')
+__author__ = 'Nicholas Chen'
 
 import os
 import pickle
@@ -35,7 +33,7 @@ LIB_NAME = 'DFP API Python Client Library'
 LIB_SHORT_NAME = 'DfpApi-Python'
 LIB_URL = 'https://github.com/googleads/googleads-python-legacy-lib/'
 LIB_AUTHOR = 'Nicholas Chen'
-LIB_VERSION = '9.11.2'
+LIB_VERSION = '9.11.3'
 LIB_MIN_COMMON_VERSION = '3.1.1'
 LIB_SIG = GenerateLibSig(LIB_SHORT_NAME, LIB_VERSION)
 
@@ -45,8 +43,8 @@ if VERSION < LIB_MIN_COMMON_VERSION:
   raise MissingPackageError(msg)
 
 # Tuple of strings representing API versions.
-API_VERSIONS = ('v201208', 'v201211', 'v201302', 'v201306', 'v201308',
-                'v201403', 'v201405')
+API_VERSIONS = ('v201306', 'v201308', 'v201311', 'v201403', 'v201405',
+                'v201408')
 DEFAULT_API_VERSION = API_VERSIONS[-1]
 
 # Accepted combinations of headers which user has to provide. Either one of

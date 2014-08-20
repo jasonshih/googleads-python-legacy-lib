@@ -16,7 +16,7 @@
 
 """Validation functions."""
 
-__author__ = 'api.sgrinberg@gmail.com (Stan Grinberg)'
+__author__ = 'Nicholas Chen'
 
 from adspygoogle.common.Errors import ValidationError
 
@@ -32,18 +32,16 @@ def ValidateServer(server, version):
     ValidationError: if the given API server or version is not valid.
   """
   # Map of supported API servers and versions.
-  servers = {'v201208': 'https://www.google.com',
-             'v201211': 'https://www.google.com',
-             'v201302': 'https://www.google.com',
-             'v201306': 'https://www.google.com',
-             'v201308': 'https://www.google.com',
-             'v201311': 'https://www.google.com',
-             'v201403': 'https://www.google.com',
-             'v201405': 'https://www.google.com'}
+  servers = {'v201306': 'https://ads.google.com',
+             'v201308': 'https://ads.google.com',
+             'v201311': 'https://ads.google.com',
+             'v201403': 'https://ads.google.com',
+             'v201405': 'https://ads.google.com',
+             'v201408': 'https://ads.google.com'}
 
   if server not in servers.values():
     msg = ('Given API server, \'%s\', is not valid. Expecting '
-           '\'https://www.google.com\'.' % server)
+           '\'https://ads.google.com\'.' % server)
     raise ValidationError(msg)
 
   if version not in servers.keys():

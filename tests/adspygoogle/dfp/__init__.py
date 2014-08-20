@@ -27,8 +27,8 @@ from adspygoogle.dfp.DfpClient import DfpClient
 
 
 HTTP_PROXY = None
-SERVER_V201208 = 'https://www.google.com'
-SERVER_V201211 = 'https://www.google.com'
+SERVER_V201208 = 'https://ads.google.com'
+SERVER_V201211 = 'https://ads.google.com'
 
 TEST_VERSION_V201208 = True
 TEST_VERSION_V201211 = True

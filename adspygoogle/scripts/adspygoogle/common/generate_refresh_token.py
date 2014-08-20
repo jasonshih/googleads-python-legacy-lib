@@ -31,7 +31,7 @@ PRODUCT_TO_OAUTH_SCOPE = [
     ('AdWords / Ad Exchange Buyer', 'https://adwords.google.com/api/adwords'),
     ('DoubleClick for Advertisers', 'https://www.googleapis.com/auth/'
      'dfatrafficking'),
-    ('DoubleClick for Publishers', 'https://www.google.com/apis/ads/publisher'),
+    ('DoubleClick for Publishers', 'https://www.googleapis.com/auth/dfp'),
     ('Places', 'https://www.google.com/local/add'),
     ('Other', None)
 ]

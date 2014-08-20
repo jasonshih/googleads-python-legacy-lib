@@ -56,7 +56,7 @@ def main(application_name, network_code, oauth2_client_id,
   flow = OAuth2WebServerFlow(
       client_id=oauth2_client_id,
       client_secret=oauth2_client_secret,
-      scope='https://www.google.com/apis/ads/publisher',
+      scope='https://www.googleapis.com/auth/dfp',
       user_agent='oauth2 code example',
       redirect_uri='urn:ietf:wg:oauth:2.0:oob')
 

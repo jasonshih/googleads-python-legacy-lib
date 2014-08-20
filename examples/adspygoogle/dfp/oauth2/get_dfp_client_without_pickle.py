@@ -27,7 +27,7 @@ from oauth2client import client
 APPLICATION_NAME = 'INSERT_APPLICATION_NAME_HERE'
 CLIENT_ID = 'INSERT_CLIENT_ID_HERE'
 CLIENT_SECRET = 'INSERT_CLIENT_SECRET_HERE'
-SCOPE = 'https://www.google.com/apis/ads/publisher'
+SCOPE = 'https://www.googleapis.com/auth/dfp'
 USER_AGENT = 'INSERT_USER_AGENT_HERE'
 
 

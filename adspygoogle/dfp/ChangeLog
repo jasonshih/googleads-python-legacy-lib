@@ -1,3 +1,15 @@
+9.11.3:
+- Added support for v201408.
+- Removed support for deprecated versions (v201208, v201302, v201306, v201308)
+- Removed RateCardCustomizationService and RateCardCustomizationGroupService,
+  replaced with PremiumRateService.
+- Changed endpoint to https://ads.google.com/
+- Changed OAuth2 scope to https://www.googleapis.com/auth/dfp/
+
+
+9.11.2:
+- Added support for v201405.
+
 9.11.1:
 - Fix naming for PAGE_LIMIT constant in DfpUtils.
 
