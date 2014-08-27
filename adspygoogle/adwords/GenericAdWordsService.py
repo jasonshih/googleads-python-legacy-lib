@@ -22,8 +22,6 @@ import time
 
 from adspygoogle import SOAPpy
 from adspygoogle.adwords import AdWordsUtils
-from adspygoogle.adwords import AUTH_TOKEN_EXPIRE
-from adspygoogle.adwords import AUTH_TOKEN_SERVICE
 from adspygoogle.adwords import LIB_SIG
 from adspygoogle.adwords import LIB_URL
 from adspygoogle.adwords.AdWordsErrors import AdWordsApiError
@@ -33,7 +31,6 @@ from adspygoogle.adwords.AdWordsSoapBuffer import AdWordsSoapBuffer
 from adspygoogle.common import Utils
 from adspygoogle.common.Errors import ApiVersionNotSupportedError
 from adspygoogle.common.Errors import Error
-from adspygoogle.common.Errors import ValidationError
 from adspygoogle.common.GenericApiService import GenericApiService
 from adspygoogle.common.GenericApiService import MethodInfoKeys
 
@@ -46,11 +43,8 @@ class GenericAdWordsService(GenericApiService):
   # the self._headers dictionary keys for all elements that may be in an AdWords
   # header.
   _POSSIBLE_ADWORDS_REQUEST_HEADERS = (
-      'authToken', 'developerToken', 'userAgent', 'clientCustomerId',
-      'validateOnly', 'partialFailure')
-  # The _OAUTH_IGNORE_HEADERS are the header elements that should not be
-  # included when the client is using OAuth.
-  _OAUTH_IGNORE_HEADERS = ('authToken')
+      'developerToken', 'userAgent', 'clientCustomerId', 'validateOnly',
+      'partialFailure')
   # The _WRAP_LISTS constant indicates that AdWords services do not need to wrap
   # lists in an extra layer of XML element tags.
   _WRAP_LISTS = False
@@ -107,20 +101,6 @@ class GenericAdWordsService(GenericApiService):
   def _SetHeaders(self):
     """Sets the SOAP headers for this service's requests."""
     now = time.time()
-    if ((('authToken' not in self._headers and
-          'auth_token_epoch' not in self._config) or
-         int(now - self._config['auth_token_epoch']) >= AUTH_TOKEN_EXPIRE) and
-        not self._headers.get('oauth2credentials')):
-      if ('email' not in self._headers or not self._headers['email'] or
-          'password' not in self._headers or not self._headers['password']):
-        raise ValidationError('Required authentication headers, \'email\' and '
-                              '\'password\', are missing. Unable to regenerate '
-                              'authentication token.')
-      self._headers['authToken'] = Utils.GetAuthToken(
-          self._headers['email'], self._headers['password'], AUTH_TOKEN_SERVICE,
-          LIB_SIG, self._config['proxy'])
-      self._config['auth_token_epoch'] = time.time()
-
     # Apply headers to the SOAPpy service.
     header_attrs = {
         'xmlns': self._namespace,
@@ -130,9 +110,6 @@ class GenericAdWordsService(GenericApiService):
     soap_headers = SOAPpy.Types.headerType(attrs=header_attrs)
     request_header_data = {}
     for key in GenericAdWordsService._POSSIBLE_ADWORDS_REQUEST_HEADERS:
-      if (key in GenericAdWordsService._OAUTH_IGNORE_HEADERS
-          and self._headers.get('oauth2credentials')):
-        continue
       if key in self._headers and self._headers[key]:
         value = self._headers[key]
         if key in GenericAdWordsService._STR_CONVERT:

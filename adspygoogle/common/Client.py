@@ -53,6 +53,8 @@ _DEFAULT_CONFIG = {
 _OAUTH_2_AUTH_KEYS = set(['clientId', 'clientSecret', 'refreshToken'])
 # The web address for generating OAuth 2.0 credentials at Google.
 _GOOGLE_OAUTH2_ENDPOINT = 'https://accounts.google.com/o/oauth2/token'
+# Path used when the home path is disabled.
+_NULL_HOME_PATH = '/dev/null/'
 
 
 class Client(object):
@@ -61,8 +63,8 @@ class Client(object):
 
   Allows instantiation of all web services.
   """
-
-  home = os.getcwd()
+  # This dummy home directory is used when the header is provided.
+  home = '/dev/null'
   auth_pkl = ''
   config_pkl = ''
 

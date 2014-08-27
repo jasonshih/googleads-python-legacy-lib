@@ -69,7 +69,8 @@ class Issue51Test(unittest.TestCase):
         'oauth2credentials': OAuth2Credentials(
             'ACCESS_TOKEN', 'client_id', 'client_secret', 'refresh_token', None,
             'uri', 'user_agent')
-    })
+    },
+                           path='/tmp/')
 
     with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
       service = client.GetCampaignService()

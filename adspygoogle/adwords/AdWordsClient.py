@@ -23,7 +23,6 @@ import thread
 import time
 
 from adspygoogle.adwords import AdWordsSanityCheck
-from adspygoogle.adwords import AUTH_TOKEN_SERVICE
 from adspygoogle.adwords import DEFAULT_API_VERSION
 from adspygoogle.adwords import LIB_SIG
 from adspygoogle.adwords import REQUIRED_SOAP_HEADERS
@@ -32,7 +31,6 @@ from adspygoogle.adwords.ReportDownloader import ReportDownloader
 from adspygoogle.common import SanityCheck
 from adspygoogle.common import Utils
 from adspygoogle.common.Client import Client
-from adspygoogle.common.Errors import AuthTokenError
 from adspygoogle.common.Errors import ValidationError
 from adspygoogle.common.Logger import Logger
 
@@ -43,12 +41,10 @@ class AdWordsClient(Client):
 
   Allows instantiation of all AdWords API web services.
   """
-
   auth_pkl_name = 'adwords_api_auth.pkl'
   config_pkl_name = 'adwords_api_config.pkl'
 
-  def __init__(self, headers=None, config=None, path=None,
-               login_token=None, login_captcha=None):
+  def __init__(self, headers=None, config=None, path=None):
     """Inits AdWordsClient.
 
     Args:
@@ -57,15 +53,9 @@ class AdWordsClient(Client):
       config: dict Object with client configuration values.
       path: str Relative or absolute path to home directory (i.e. location of
             pickles and logs/).
-      login_token: str Token representing the specific CAPTCHA challenge.
-      login_captcha: str String entered by the user as an answer to a CAPTCHA
-                     challenge.
 
     Example:
       headers = {
-        'email': 'johndoe@example.com',
-        'password': 'secret',
-        'authToken': '...',
         'clientCustomerId': '1234567890',
         'userAgent': 'GoogleTest',
         'developerToken': 'ABcdeFGH93KL-NOPQ_STUv.',
@@ -113,7 +103,7 @@ class AdWordsClient(Client):
            not os.path.exists(os.path.join(AdWordsClient.home,
                                            AdWordsClient.config_pkl_name)))):
         AdWordsClient.home = os.path.expanduser('~')
-    else:
+    elif not headers:
       AdWordsClient.home = os.path.expanduser('~')
 
     # Update location for both pickles.
@@ -163,30 +153,8 @@ class AdWordsClient(Client):
       self._headers['partialFailure'] = str(Utils.BoolTypeConvert(
           self._headers['partialFailure'])).lower()
 
-    # Load/set authentication token.
-    if self._headers.get('authToken'):
-      # If they have a non-empty authToken, set the epoch and skip the rest.
-      self._config['auth_token_epoch'] = time.time()
-    elif self._headers.get('oauth2credentials'):
-      # If they have oauth2credentials, that's also fine.
-      pass
-    elif (self._headers.get('email') and self._headers.get('password')
-          and not self._headers.get('authToken')):
-      # If they have a non-empty email and password but no or empty authToken,
-      # generate an authToken.
-      try:
-        self._headers['authToken'] = Utils.GetAuthToken(
-            self._headers['email'], self._headers['password'],
-            AUTH_TOKEN_SERVICE, LIB_SIG, self._config['proxy'], login_token,
-            login_captcha)
-        self._config['auth_token_epoch'] = time.time()
-      except AuthTokenError, e:
-        # We would end up here if non-valid Google Account's credentials were
-        # specified.
-        raise ValidationError('Was not able to obtain an AuthToken for '
-                              'provided email and password, see root_cause.', e)
-    else:
-      # We need either oauth2credentials OR authToken.
+    # Verify oauth2credentials is provided
+    if not self._headers.get('oauth2credentials'):
       raise ValidationError('Authentication data is missing.')
 
     self.__is_mcc = False
@@ -964,6 +932,38 @@ class AdWordsClient(Client):
     }
     return GenericAdWordsService(headers, self._config, op_config, self.__lock,
                                  self.__logger, 'ConstantDataService')
+
+  def GetCustomerFeedService(self, server='https://adwords.google.com',
+                             version=None, http_proxy=None):
+    """Call API method in CustomerFeedService.
+
+    Args:
+      [optional]
+      server: str API server to access for this API call. The only supported
+              server is currently 'https://adwords.google.com'.
+      version: str API version to use.
+      http_proxy: str HTTP proxy to use.
+
+    Returns:
+      GenericAdWordsService New instance of CustomerFeedService object.
+    """
+    headers = self.__GetAuthCredentialsForAccessLevel()
+
+    if version is None:
+      version = DEFAULT_API_VERSION
+    if Utils.BoolTypeConvert(self._config['strict']):
+      AdWordsSanityCheck.ValidateServer(server, version)
+
+    # Load additional configuration data.
+    op_config = {
+        'server': server,
+        'version': version,
+        'group': 'cm',
+        'default_group': 'cm',
+        'http_proxy': http_proxy
+    }
+    return GenericAdWordsService(headers, self._config, op_config, self.__lock,
+                                 self.__logger, 'CustomerFeedService')
 
   def GetCustomerService(self, server='https://adwords.google.com',
                          version=None, http_proxy=None):

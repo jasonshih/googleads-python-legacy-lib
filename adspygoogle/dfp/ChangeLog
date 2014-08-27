@@ -1,3 +1,7 @@
+9.11.4
+- Restored support for App Engine. To use with App Engine, create your Client
+  by initializing with headers and without a path.
+
 9.11.3:
 - Added support for v201408.
 - Removed support for deprecated versions (v201208, v201302, v201306, v201308)
@@ -5,7 +9,6 @@
   replaced with PremiumRateService.
 - Changed endpoint to https://ads.google.com/
 - Changed OAuth2 scope to https://www.googleapis.com/auth/dfp/
-
 
 9.11.2:
 - Added support for v201405.

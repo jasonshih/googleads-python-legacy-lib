@@ -108,7 +108,7 @@ class DfpClient(Client):
            not os.path.exists(os.path.join(DfpClient.home,
                                            DfpClient.config_pkl_name)))):
         DfpClient.home = os.path.expanduser('~')
-    else:
+    elif not headers:
       DfpClient.home = os.path.expanduser('~')
 
     # Update location for both pickles.

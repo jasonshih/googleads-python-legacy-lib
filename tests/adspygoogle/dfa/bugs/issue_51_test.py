@@ -45,11 +45,11 @@ class Issue51Test(unittest.TestCase):
   def _RunTestWithBuffer(self, buffer_):
     """Tests error parsing using the given DfaSoapBuffer."""
     client = DfaClient(headers={
-        'Username': 'username',
-        'Password': 'secret',
-        'AuthToken': 'password',
-        'appName': 'APP NAME'
-    })
+                           'Username': 'username',
+                           'Password': 'secret',
+                           'AuthToken': 'password',
+                           'appName': 'APP NAME'
+                       }, path='/tmp/')
 
     with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
       service = client.GetSpotlightService()

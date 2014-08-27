@@ -23,6 +23,7 @@ import sys
 sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import unittest
 
+from examples.adspygoogle.adwords.v201406.advanced_operations import add_ad_customizer
 from examples.adspygoogle.adwords.v201406.advanced_operations import add_ad_group_bid_modifier
 from examples.adspygoogle.adwords.v201406.advanced_operations import add_click_to_download_ad
 from examples.adspygoogle.adwords.v201406.advanced_operations import add_site_links
@@ -49,15 +50,19 @@ class AdvancedOperations(unittest.TestCase):
     """Prepare unittest."""
     if not self.loaded:
       self.campaign_id = util.CreateTestCampaign(client)
-      self.ad_group_id = util.CreateTestAdGroup(client, self.campaign_id)
+      self.ad_group_id_1 = util.CreateTestAdGroup(client, self.campaign_id)
+      self.ad_group_id_2 = util.CreateTestAdGroup(client, self.campaign_id)
+
+  def testAddAdCustomizer(self):
+    add_ad_customizer.main(client, [self.ad_group_id_1, self.ad_group_id_2])
 
   def testAddAndRetrieveAdGroupBidModifier(self):
-    add_ad_group_bid_modifier.main(client, self.ad_group_id, '1.5')
+    add_ad_group_bid_modifier.main(client, self.ad_group_id_1, '1.5')
     get_ad_group_bid_modifier.main(client)
 
   def testAddClickToDownloadAd(self):
     """Tests whether we can create an account."""
-    add_click_to_download_ad.main(client, self.ad_group_id)
+    add_click_to_download_ad.main(client, self.ad_group_id_1)
 
   def testAddSiteLink(self):
     """Test whether we can get account alerts."""
@@ -65,7 +70,7 @@ class AdvancedOperations(unittest.TestCase):
 
   def testAddTextAdWithUpgradedUrls(self):
     """Test whether we can add a text ad using upgraded urls"""
-    add_text_ad_with_upgraded_urls.main(client, self.ad_group_id)
+    add_text_ad_with_upgraded_urls.main(client, self.ad_group_id_1)
 
   def testUseSharedBiddingStrategy(self):
     use_shared_bidding_strategy.main(client, None)

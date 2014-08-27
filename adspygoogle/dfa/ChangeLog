@@ -1,3 +1,7 @@
+2.4.2:
+- Restored support for App Engine. To use with App Engine, create your Client
+  by initializing with headers and without a path.
+
 2.4.1:
 - Bumped the common library version to 3.1.0. Support for OAuth 2.0 has been
   improved and is now the preferred way of authenticating. Using legacy DFA

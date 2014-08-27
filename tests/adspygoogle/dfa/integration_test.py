@@ -102,7 +102,7 @@ class DfaIntegrationTest(unittest.TestCase):
     config = {
         'compress': False
     }
-    client = DfaClient(headers=headers, config=config)
+    client = DfaClient(headers=headers, config=config, path='/tmp/')
 
     placement_service = self._CreatePlacementService(client)
 
@@ -164,7 +164,7 @@ class DfaIntegrationTest(unittest.TestCase):
     config = {
         'compress': False
     }
-    client = DfaClient(headers=headers, config=config)
+    client = DfaClient(headers=headers, config=config, path='/tmp/')
 
     placement_service = self._CreatePlacementService(client)
     placement_service._config['compress'] = False

@@ -33,7 +33,7 @@ LIB_NAME = 'DFP API Python Client Library'
 LIB_SHORT_NAME = 'DfpApi-Python'
 LIB_URL = 'https://github.com/googleads/googleads-python-legacy-lib/'
 LIB_AUTHOR = 'Nicholas Chen'
-LIB_VERSION = '9.11.3'
+LIB_VERSION = '9.11.4'
 LIB_MIN_COMMON_VERSION = '3.1.1'
 LIB_SIG = GenerateLibSig(LIB_SHORT_NAME, LIB_VERSION)
 

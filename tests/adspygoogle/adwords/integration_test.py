@@ -226,7 +226,7 @@ class AdWordsIntegrationTest(unittest.TestCase):
         'clientCustomerId': CLIENT_CUSTOMER_ID,
         'oauth2credentials': oauth2_credential
     }
-    return AdWordsClient(headers=headers)
+    return AdWordsClient(headers=headers,path='/tmp/')
 
   def _CreateCampaignService(self, client):
     """Creates a SOAP service proxy for the AdWords CampaignService.

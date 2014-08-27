@@ -1,3 +1,8 @@
+15.16.1:
+- Restored support for App Engine. To use with App Engine, create your Client
+  by initializing with headers and without a path.
+- Removing Client login now that it is sunset for the AdWords API.
+
 15.16.0:
 - Removed support for v201309.
 - AdGroups/Campaigns no longer renamed on remove/delete in examples, obsolete.

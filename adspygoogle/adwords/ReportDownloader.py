@@ -27,8 +27,6 @@ import urllib
 import urllib2
 
 from adspygoogle import SOAPpy
-from adspygoogle.adwords import AUTH_TOKEN_EXPIRE
-from adspygoogle.adwords import AUTH_TOKEN_SERVICE
 from adspygoogle.adwords import LIB_SIG
 from adspygoogle.adwords.AdWordsErrors import AdWordsError
 from adspygoogle.adwords.AdWordsErrors import AdWordsReportError
@@ -282,13 +280,8 @@ class ReportDownloader(object):
     if 'clientCustomerId' in self._headers:
       headers['clientCustomerId'] = self._headers['clientCustomerId']
 
-    # Handle OAuth (if enabled) and ClientLogin
-    if self._headers.get('oauth2credentials'):
-      self._headers['oauth2credentials'].apply(headers)
-    else:
-      headers['Authorization'] = ('GoogleLogin %s' %
-          urllib.urlencode({'auth':
-                            self._headers['authToken'].strip()}))
+    # Apply OAuth2 headers
+    self._headers['oauth2credentials'].apply(headers)
 
     if return_micros is not None:
       if self._op_config['version'] == FINAL_RETURN_MONEY_IN_MICROS_VERSION:
@@ -381,10 +374,7 @@ class ReportDownloader(object):
 
   def _CheckAuthentication(self):
     """Ensures we have authentication values ready to make the request."""
-    if self._headers.get('oauth2credentials'):
-      self._RefreshCredentialIfNecessary(self._headers['oauth2credentials'])
-    else:
-      self.__ReloadAuthToken()
+    self._RefreshCredentialIfNecessary(self._headers['oauth2credentials'])
 
   def _RefreshCredentialIfNecessary(self, credential):
     """Checks if the credential needs refreshing and refreshes if necessary."""
@@ -393,26 +383,6 @@ class ReportDownloader(object):
         datetime.timedelta(minutes=_OAUTH2_REFRESH_MINUTES_IN_ADVANCE)):
       import httplib2
       self._headers['oauth2credentials'].refresh(httplib2.Http())
-
-  def __ReloadAuthToken(self):
-    """Ensures we have a valid auth_token in our headers."""
-    # Load/set authentication token. If authentication token has expired,
-    # regenerate it.
-    now = time.time()
-    if (('authToken' not in self._headers and
-         'auth_token_epoch' not in self._config) or
-        int(now - self._config['auth_token_epoch']) >= AUTH_TOKEN_EXPIRE):
-      if ('email' not in self._headers or
-          not self._headers['email'] or
-          'password' not in self._headers or
-          not self._headers['password']):
-        msg = ('Required authentication headers, \'email\' and \'password\', '
-               'are missing. Unable to regenerate authentication token.')
-        raise ValidationError(msg)
-      self._headers['authToken'] = Utils.GetAuthToken(
-          self._headers['email'], self._headers['password'],
-          AUTH_TOKEN_SERVICE, LIB_SIG, self._config['proxy'])
-      self._config['auth_token_epoch'] = time.time()
 
   def __DumpToFile(self, response, fileobj):
     """Reads from response.read() and writes to fileobj.

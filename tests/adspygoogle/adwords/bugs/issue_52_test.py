@@ -39,9 +39,10 @@ class Issue52Test(unittest.TestCase):
 
   def setUp(self):
     """Prepare unittest."""
-    client = AdWordsClient(headers={'authToken': 'AUTH TOKEN',
+    client = AdWordsClient(headers={'oauth2credentials': 'cr3d3n7i415',
                                     'userAgent': 'USER AGENT',
-                                    'developerToken': 'DEV TOKEN'})
+                                    'developerToken': 'DEV TOKEN'},
+                           path='/tmp/')
     self.service = client.GetReportDownloader()
 
   def testHandleUrlError(self):

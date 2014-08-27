@@ -34,7 +34,7 @@ LIB_SHORT_NAME = 'AwApi-Python'
 LIB_URL = 'https://github.com/googleads/googleads-python-legacy-lib'
 LIB_AUTHOR = 'Stan Grinberg'
 LIB_AUTHOR_EMAIL = 'api.sgrinberg@gmail.com'
-LIB_VERSION = '15.16.0'
+LIB_VERSION = '15.16.1'
 LIB_MIN_COMMON_VERSION = '3.1.1'
 LIB_SIG = GenerateLibSig(LIB_SHORT_NAME, LIB_VERSION)
 
@@ -49,10 +49,5 @@ DEFAULT_API_VERSION = API_VERSIONS[-1]
 
 # Accepted combinations of headers which user has to provide. Either one of
 # these is required in order to make a succesful API request.
-REQUIRED_SOAP_HEADERS = (('email', 'password', 'userAgent', 'developerToken'),
-                         ('email', 'password', 'userAgent', 'developerToken'),
-                         ('authToken', 'userAgent', 'developerToken'),
+REQUIRED_SOAP_HEADERS = (('oauth2credentials', 'userAgent', 'developerToken'),
                          ('oauth2credentials', 'userAgent', 'developerToken'))
-
-AUTH_TOKEN_SERVICE = 'adwords'
-AUTH_TOKEN_EXPIRE = 60 * 60 * 23

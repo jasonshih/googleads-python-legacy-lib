@@ -34,7 +34,7 @@ LIB_SHORT_NAME = 'DfaApi-Python'
 LIB_URL = 'https://github.com/googleads/googleads-python-legacy-lib/'
 LIB_AUTHOR = 'Joseph DiLallo'
 LIB_AUTHOR_EMAIL = 'api.jdilallo@gmail.com'
-LIB_VERSION = '2.4.1'
+LIB_VERSION = '2.4.2'
 LIB_MIN_COMMON_VERSION = '3.1.0'
 LIB_SIG = GenerateLibSig(LIB_SHORT_NAME, LIB_VERSION)
 

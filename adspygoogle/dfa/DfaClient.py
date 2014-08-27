@@ -97,7 +97,7 @@ class DfaClient(Client):
            not os.path.exists(os.path.join(DfaClient.home,
                                            DfaClient.config_pkl_name)))):
         DfaClient.home = os.path.expanduser('~')
-    else:
+    elif not headers:
       DfaClient.home = os.path.expanduser('~')
 
     # Update location for both pickles.
