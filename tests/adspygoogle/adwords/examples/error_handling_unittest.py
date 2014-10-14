@@ -24,20 +24,20 @@ sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import time
 import unittest
 
-from examples.adspygoogle.adwords.v201406.error_handling import handle_partial_failures
+from examples.adspygoogle.adwords.v201409.error_handling import handle_partial_failures
 from tests.adspygoogle.adwords import client
-from tests.adspygoogle.adwords import SERVER_V201406
-from tests.adspygoogle.adwords import TEST_VERSION_V201406
+from tests.adspygoogle.adwords import SERVER_V201409
+from tests.adspygoogle.adwords import TEST_VERSION_V201409
 from tests.adspygoogle.adwords import util
-from tests.adspygoogle.adwords import VERSION_V201406
+from tests.adspygoogle.adwords import VERSION_V201409
 
 
 class ErrorHandling(unittest.TestCase):
 
   """Unittest suite for Error Handling code examples."""
 
-  SERVER = SERVER_V201406
-  VERSION = VERSION_V201406
+  SERVER = SERVER_V201409
+  VERSION = VERSION_V201409
   client.debug = False
   loaded = False
 
@@ -61,5 +61,5 @@ class ErrorHandling(unittest.TestCase):
 
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201406:
+  if TEST_VERSION_V201409:
     unittest.main()

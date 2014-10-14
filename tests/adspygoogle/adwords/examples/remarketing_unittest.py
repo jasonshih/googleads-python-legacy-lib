@@ -23,20 +23,21 @@ import sys
 sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import unittest
 
-from examples.adspygoogle.adwords.v201406.remarketing import add_audience
-from examples.adspygoogle.adwords.v201406.remarketing import add_conversion_tracker
+from examples.adspygoogle.adwords.v201409.remarketing import add_audience
+from examples.adspygoogle.adwords.v201409.remarketing import add_conversion_tracker
+from examples.adspygoogle.adwords.v201409.remarketing import add_rule_based_user_lists
 from tests.adspygoogle.adwords import client
-from tests.adspygoogle.adwords import SERVER_V201406
-from tests.adspygoogle.adwords import TEST_VERSION_V201406
-from tests.adspygoogle.adwords import VERSION_V201406
+from tests.adspygoogle.adwords import SERVER_V201409
+from tests.adspygoogle.adwords import TEST_VERSION_V201409
+from tests.adspygoogle.adwords import VERSION_V201409
 
 
 class Remarketing(unittest.TestCase):
 
   """Unittest suite for Remarketing code examples."""
 
-  SERVER = SERVER_V201406
-  VERSION = VERSION_V201406
+  SERVER = SERVER_V201409
+  VERSION = VERSION_V201409
   client.debug = False
 
   def setUp(self):
@@ -51,7 +52,11 @@ class Remarketing(unittest.TestCase):
     """Test whether we can add a conversion tracker."""
     add_conversion_tracker.main(client)
 
+  def testAddRuleBasedUserLists(self):
+    """Test whether we can add rule-based user lists."""
+    add_rule_based_user_lists.main(client)
+
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201406:
+  if TEST_VERSION_V201409:
     unittest.main()

@@ -24,23 +24,22 @@ sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import time
 import unittest
 
-from examples.adspygoogle.adwords.v201406.optimization import estimate_keyword_traffic
-from examples.adspygoogle.adwords.v201406.optimization import get_keyword_bid_simulations
-from examples.adspygoogle.adwords.v201406.optimization import get_keyword_ideas
-from examples.adspygoogle.adwords.v201406.optimization import get_placement_ideas
+from examples.adspygoogle.adwords.v201409.optimization import estimate_keyword_traffic
+from examples.adspygoogle.adwords.v201409.optimization import get_keyword_bid_simulations
+from examples.adspygoogle.adwords.v201409.optimization import get_keyword_ideas
 from tests.adspygoogle.adwords import client
-from tests.adspygoogle.adwords import SERVER_V201406
-from tests.adspygoogle.adwords import TEST_VERSION_V201406
+from tests.adspygoogle.adwords import SERVER_V201409
+from tests.adspygoogle.adwords import TEST_VERSION_V201409
 from tests.adspygoogle.adwords import util
-from tests.adspygoogle.adwords import VERSION_V201406
+from tests.adspygoogle.adwords import VERSION_V201409
 
 
 class Optimization(unittest.TestCase):
 
   """Unittest suite for Optimization code examples."""
 
-  SERVER = SERVER_V201406
-  VERSION = VERSION_V201406
+  SERVER = SERVER_V201409
+  VERSION = VERSION_V201409
   client.debug = False
   loaded = False
 
@@ -69,11 +68,7 @@ class Optimization(unittest.TestCase):
     """Test whether we can get keyword ideas."""
     get_keyword_ideas.main(client)
 
-  def testGetPlacementIdeas(self):
-    """Test whether we can get placement ideas."""
-    get_placement_ideas.main(client)
-
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201406:
+  if TEST_VERSION_V201409:
     unittest.main()

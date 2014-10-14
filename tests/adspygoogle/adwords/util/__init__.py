@@ -75,13 +75,7 @@ def CreateTestCampaign(client):
           'advertisingChannelType': 'DISPLAY',
           'budget': {
               'budgetId': CreateTestBudget(client)
-          },
-          'settings': [
-              {
-                  'xsi_type': 'KeywordMatchSetting',
-                  'optIn': 'false'
-              }
-          ]
+          }
       }
   }]
   return campaign_service.Mutate(
@@ -114,11 +108,6 @@ def CreateTestShoppingCampaign(client, budget_id, merchant_id):
           'biddingStrategyType': 'MANUAL_CPC'
       },
       'settings': [
-          # Set keyword matching setting (required)
-          {
-              'xsi_type': 'KeywordMatchSetting',
-              'optIn': 'false'
-          },
           # All shopping campaigns need a ShoppingSetting
           {
               'xsi_type': 'ShoppingSetting',
@@ -168,9 +157,6 @@ def CreateTestRTBCampaign(client):
           'settings': [{
               'xsi_type': 'RealTimeBiddingSetting',
               'optIn': 'true'
-          }, {
-              'xsi_type': 'KeywordMatchSetting',
-              'optIn': 'false'
           }]
       }
   }]
@@ -234,6 +220,7 @@ def CreateTestShoppingAdGroup(client, campaign_id):
   adgroup_service = client.GetAdGroupService(SERVER, VERSION, HTTP_PROXY)
 
   return adgroup_service.Mutate(operations)[0]['value'][0]['id']
+
 
 def CreateTestCPMAdGroup(client, campaign_id):
   """Creates a CPM AdGroup to run tests with.
@@ -391,7 +378,7 @@ def CreateTestLocationExtension(client, campaign_id):
     int Location Extension ID
   """
   geo_location_service = client.GetGeoLocationService(
-      SERVER, VERSION,HTTP_PROXY)
+      SERVER, VERSION, HTTP_PROXY)
   campaign_ad_extension_service = client.GetCampaignAdExtensionService(
       SERVER, VERSION, HTTP_PROXY)
   selector = {
@@ -454,3 +441,39 @@ def GetExperimentIdForCampaign(client, campaign_id):
   experiment_service = client.GetExperimentService(SERVER, VERSION, HTTP_PROXY)
   page = experiment_service.get(selector)[0]
   return page['entries'][0]['id']
+
+
+def RemoveAllFeeds(client):
+  """Removes all Feeds associated with the account.
+
+  Args:
+    client: AdWordsClient client to obtain services from.
+  """
+  feed_service = client.GetFeedService()
+
+  selector = {
+      'fields': ['Id'],
+      'predicates': [{
+          'field': 'FeedStatus',
+          'operator': 'EQUALS',
+          'values': ['ENABLED']
+      }, {
+          'field': 'Origin',
+          'operator': 'EQUALS',
+          'values': ['USER']
+      }]
+  }
+
+  response = feed_service.get(selector)[0]
+
+  if 'entries' in response:
+    # Use feeds in response to build operations for delete operation.
+    operations = [{
+        'operator': 'REMOVE',
+        'operand': {
+            'xsi_type': 'Feed',
+            'id': feed['id']
+        }
+    } for feed in response['entries']]
+  # Delete the feeds
+  feed_service.Mutate(operations)

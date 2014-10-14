@@ -78,6 +78,18 @@ class AdWordsClientServiceTest(unittest.TestCase):
                                          'userAgent': 'USER AGENT',
                                          'developerToken': 'DEV TOKEN'})
 
+  def testGetAlertService(self):
+    """AlertService shouldn't be created as of v201409"""
+    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
+      with self.assertRaises(ValidationError):
+        service = self.client.GetAlertService()
+
+  def testGetAlertService_v201406(self):
+    """AlertService should be created in v201406 or earlier."""
+    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
+      service = self.client.GetAlertService(version='v201406')
+      self.assertEquals('AlertService', service._service_name)
+
   def testGetBudgetService(self):
     with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
       service = self.client.GetBudgetService()
@@ -113,17 +125,17 @@ class AdWordsClientServiceTest(unittest.TestCase):
       service = self.client.GetFeedService()
       self.assertEquals('FeedService', service._service_name)
 
+  def testGetCampaignSharedSetService(self):
+    """CampaignSharedSetService should be created after v201402."""
+    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
+      service = self.client.GetCampaignSharedSetService()
+      self.assertEquals('CampaignSharedSetService', service._service_name)
+
   def testGetCampaignSharedSetService_v201402(self):
     """CampaignSharedSetService shouldn't be created in v201402."""
     with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
       with self.assertRaises(ValidationError):
         self.client.GetCampaignSharedSetService(version='v201402')
-
-  def testGetCampaignSharedSetService_v201406(self):
-    """CampaignSharedSetService should be created in v201406."""
-    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
-      service = self.client.GetCampaignSharedSetService(version='v201406')
-      self.assertEquals('CampaignSharedSetService', service._service_name)
 
   def testGetSharedSetService(self):
     """SharedSetService now available in both v201402 and v201406."""

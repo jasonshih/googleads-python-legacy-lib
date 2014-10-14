@@ -21,7 +21,9 @@ __author__ = 'api.sgrinberg@gmail.com (Stan Grinberg)'
 from adspygoogle.common.Errors import ValidationError
 
 # Identifies Services that have been deprecated after the given version.
-DEPRECATED_AFTER = {}
+DEPRECATED_AFTER = {
+    'AlertService': 'v201406'
+}
 
 # For the special case where a Service is brought back after being deprecated;
 # allows you to specify versions where the Service is deprecated.
@@ -34,6 +36,7 @@ DEPRECATED_IN = {
 _VERSION_SERVER_MAP = {
     'v201402': ('https://adwords.google.com',),
     'v201406': ('https://adwords.google.com',),
+    'v201409': ('https://adwords.google.com',),
 }
 
 

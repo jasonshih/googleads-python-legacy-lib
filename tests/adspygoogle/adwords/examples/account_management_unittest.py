@@ -23,14 +23,13 @@ import sys
 sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import unittest
 
-from examples.adspygoogle.adwords.v201406.account_management import create_account
-from examples.adspygoogle.adwords.v201406.account_management import get_account_alerts
-from examples.adspygoogle.adwords.v201406.account_management import get_account_changes
-from examples.adspygoogle.adwords.v201406.account_management import get_account_hierarchy
+from examples.adspygoogle.adwords.v201409.account_management import create_account
+from examples.adspygoogle.adwords.v201409.account_management import get_account_changes
+from examples.adspygoogle.adwords.v201409.account_management import get_account_hierarchy
 from tests.adspygoogle.adwords import client
-from tests.adspygoogle.adwords import SERVER_V201406
-from tests.adspygoogle.adwords import TEST_VERSION_V201406
-from tests.adspygoogle.adwords import VERSION_V201406
+from tests.adspygoogle.adwords import SERVER_V201409
+from tests.adspygoogle.adwords import TEST_VERSION_V201409
+from tests.adspygoogle.adwords import VERSION_V201409
 
 
 # Currently, creating accounts is broken in sandbox, so we disable that test.
@@ -41,8 +40,8 @@ class AccountManagement(unittest.TestCase):
 
   """Unittest suite for Account Management code examples."""
 
-  SERVER = SERVER_V201406
-  VERSION = VERSION_V201406
+  SERVER = SERVER_V201409
+  VERSION = VERSION_V201409
   client.debug = False
 
   def setUp(self):
@@ -55,10 +54,6 @@ class AccountManagement(unittest.TestCase):
     if CREATE_ACCOUNT:
       create_account.main(client)
 
-  def testGetAccountAlerts(self):
-    """Test whether we can get account alerts."""
-    get_account_alerts.main(client)
-
   def testGetAccountChanges(self):
     """Test whether we can get account changes."""
     get_account_changes.main(client)
@@ -70,5 +65,5 @@ class AccountManagement(unittest.TestCase):
 
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201406:
+  if TEST_VERSION_V201409:
     unittest.main()

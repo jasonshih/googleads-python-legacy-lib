@@ -23,24 +23,23 @@ import sys
 sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import unittest
 
-from examples.adspygoogle.adwords.v201406.shopping_campaigns import add_product_partition_tree
-from examples.adspygoogle.adwords.v201406.shopping_campaigns import add_product_scope
-from examples.adspygoogle.adwords.v201406.shopping_campaigns import add_shopping_campaign
-from examples.adspygoogle.adwords.v201406.shopping_campaigns import get_product_category_taxonomy
-from examples.adspygoogle.adwords.v201406.shopping_campaigns import set_product_sales_channel
+from examples.adspygoogle.adwords.v201409.shopping_campaigns import add_product_partition_tree
+from examples.adspygoogle.adwords.v201409.shopping_campaigns import add_product_scope
+from examples.adspygoogle.adwords.v201409.shopping_campaigns import add_shopping_campaign
+from examples.adspygoogle.adwords.v201409.shopping_campaigns import get_product_category_taxonomy
 from tests.adspygoogle.adwords import client
-from tests.adspygoogle.adwords import SERVER_V201406
-from tests.adspygoogle.adwords import TEST_VERSION_V201406
+from tests.adspygoogle.adwords import SERVER_V201409
+from tests.adspygoogle.adwords import TEST_VERSION_V201409
 from tests.adspygoogle.adwords import util
-from tests.adspygoogle.adwords import VERSION_V201406
+from tests.adspygoogle.adwords import VERSION_V201409
 
 
 
 class ShoppingCampaigns(unittest.TestCase):
   """Unittest suite for Shopping Campaign code examples."""
 
-  SERVER = SERVER_V201406
-  VERSION = VERSION_V201406
+  SERVER = SERVER_V201409
+  VERSION = VERSION_V201409
   client.debug = False
   loaded = False
 
@@ -73,11 +72,7 @@ class ShoppingCampaigns(unittest.TestCase):
     """Tests whether we can get product bidding category data."""
     get_product_category_taxonomy.main(client)
 
-  def testSetProductSalesChannel(self):
-    """Tests whether we can set a ProductSalesChannel Criterion."""
-    set_product_sales_channel.main(client, self.__class__.campaign_id)
-
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201406:
+  if TEST_VERSION_V201409:
     unittest.main()

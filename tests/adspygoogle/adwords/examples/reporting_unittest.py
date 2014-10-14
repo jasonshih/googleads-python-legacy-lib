@@ -23,21 +23,21 @@ import sys
 sys.path.insert(0, os.path.join('..', '..', '..', '..'))
 import unittest
 
-from examples.adspygoogle.adwords.v201406.reporting import download_criteria_report
-from examples.adspygoogle.adwords.v201406.reporting import download_criteria_report_with_awql
-from examples.adspygoogle.adwords.v201406.reporting import get_report_fields
+from examples.adspygoogle.adwords.v201409.reporting import download_criteria_report
+from examples.adspygoogle.adwords.v201409.reporting import download_criteria_report_with_awql
+from examples.adspygoogle.adwords.v201409.reporting import get_report_fields
 from tests.adspygoogle.adwords import client
-from tests.adspygoogle.adwords import SERVER_V201406
-from tests.adspygoogle.adwords import TEST_VERSION_V201406
-from tests.adspygoogle.adwords import VERSION_V201406
+from tests.adspygoogle.adwords import SERVER_V201409
+from tests.adspygoogle.adwords import TEST_VERSION_V201409
+from tests.adspygoogle.adwords import VERSION_V201409
 
 
 class Reporting(unittest.TestCase):
 
   """Unittest suite for Remarketing code examples."""
 
-  SERVER = SERVER_V201406
-  VERSION = VERSION_V201406
+  SERVER = SERVER_V201409
+  VERSION = VERSION_V201409
   client.debug = False
 
   def setUp(self):
@@ -58,5 +58,5 @@ class Reporting(unittest.TestCase):
 
 
 if __name__ == '__main__':
-  if TEST_VERSION_V201406:
+  if TEST_VERSION_V201409:
     unittest.main()

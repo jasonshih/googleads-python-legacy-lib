@@ -600,6 +600,7 @@ class AdWordsClient(Client):
       version = DEFAULT_API_VERSION
     if Utils.BoolTypeConvert(self._config['strict']):
       AdWordsSanityCheck.ValidateServer(server, version)
+    AdWordsSanityCheck.ValidateService('AlertService', version)
 
     # Load additional configuration data.
     op_config = {
@@ -709,7 +710,7 @@ class AdWordsClient(Client):
                                  self.__logger, 'BudgetOrderService')
 
   def GetMutateJobService(self, server='https://adwords.google.com',
-                              version=None, http_proxy=None):
+                          version=None, http_proxy=None):
     """Call API method in MutateJobService.
 
     Args:
@@ -1190,7 +1191,7 @@ class AdWordsClient(Client):
                                  self.__logger, 'GeoLocationService')
 
   def GetLabelService(self, server='https://adwords.google.com',
-                            version=None, http_proxy=None):
+                      version=None, http_proxy=None):
     """Call API method in LabelService.
 
     Args:
