@@ -1,3 +1,8 @@
+9.12.0
+- Added support for v201411.
+- Added SharedAdUnitService and AdExclusionRuleService.
+- Deleted examples for v201311.
+
 9.11.4
 - Restored support for App Engine. To use with App Engine, create your Client
   by initializing with headers and without a path.
