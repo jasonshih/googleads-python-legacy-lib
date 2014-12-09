@@ -20,8 +20,8 @@ __author__ = 'api.kwinter@gmail.com (Kevin Winter)'
 
 from adspygoogle.common import Utils
 from tests.adspygoogle.adwords import HTTP_PROXY
-from tests.adspygoogle.adwords import SERVER_V201402 as SERVER
-from tests.adspygoogle.adwords import VERSION_V201402 as VERSION
+from tests.adspygoogle.adwords import SERVER_V201409 as SERVER
+from tests.adspygoogle.adwords import VERSION_V201409 as VERSION
 
 
 def CreateTestBudget(client):
@@ -64,7 +64,6 @@ def CreateTestCampaign(client):
       'operand': {
           'name': 'Campaign #%s' % Utils.GetUniqueName(),
           'status': 'PAUSED',
-          'displaySelect': 'false',
           'biddingStrategyConfiguration': {
               'biddingStrategyType': 'MANUAL_CPC',
               'biddingScheme': {

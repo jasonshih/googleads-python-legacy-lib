@@ -126,39 +126,19 @@ class AdWordsClientServiceTest(unittest.TestCase):
       self.assertEquals('FeedService', service._service_name)
 
   def testGetCampaignSharedSetService(self):
-    """CampaignSharedSetService should be created after v201402."""
     with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
       service = self.client.GetCampaignSharedSetService()
       self.assertEquals('CampaignSharedSetService', service._service_name)
 
-  def testGetCampaignSharedSetService_v201402(self):
-    """CampaignSharedSetService shouldn't be created in v201402."""
-    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
-      with self.assertRaises(ValidationError):
-        self.client.GetCampaignSharedSetService(version='v201402')
-
   def testGetSharedSetService(self):
-    """SharedSetService now available in both v201402 and v201406."""
+    """SharedSetService now available in v201406."""
     with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
-      service = self.client.GetSharedSetService(version='v201406')
+      service = self.client.GetSharedSetService()
       self.assertEquals('SharedSetService', service._service_name)
 
-  def testGetSharedCriterionService_v201402(self):
-    """SharedCriterionService shouldn't be created in v201402."""
+  def testGetSharedCriterionService(self):
     with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
-      with self.assertRaises(ValidationError):
-        self.client.GetSharedCriterionService(version='v201402')
-
-  def testGetSharedCriterionService_v201406(self):
-    """SharedCriterionService should be created in v201406."""
-    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
-      service = self.client.GetSharedCriterionService(version='v201406')
-      self.assertEquals('SharedCriterionService', service._service_name)
-
-  def testGetSharedCriterionService_v201406(self):
-    """SharedCriterionService should be created in v201406."""
-    with mock.patch('adspygoogle.SOAPpy.WSDL.Proxy'):
-      service = self.client.GetSharedCriterionService(version='v201406')
+      service = self.client.GetSharedCriterionService()
       self.assertEquals('SharedCriterionService', service._service_name)
 
   def testGetAdGroupBidModifierService(self):

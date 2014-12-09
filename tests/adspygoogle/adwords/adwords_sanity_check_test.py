@@ -30,12 +30,12 @@ from adspygoogle.common.Errors import ValidationError
 class AdWordsSanityCheckTest(unittest.TestCase):
   """Tests for AdWordsSanityCheck."""
 
-  def testValidateService_infoAllowed(self):
+  def testValidateService_Allowed(self):
     AdWordsSanityCheck.ValidateService('CampaignSharedSetService', 'v201409')
 
-  def testValidateService_infoNotAllowed(self):
+  def testValidateService_NotAllowed(self):
     self.assertRaises(ValidationError, AdWordsSanityCheck.ValidateService,
-                      'CampaignSharedSetService', 'v201402')
+                      'AlertService', 'v201409')
 
 
 if __name__ == '__main__':

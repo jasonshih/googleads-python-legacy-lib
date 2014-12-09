@@ -1,3 +1,10 @@
+15.17.1:
+- Removed support for v201402.
+- Removed return_micros from ReportDownloader; no longer an option with the
+  sunset of v201402.
+- Refactored add_places_location_extensions.py example; now called
+  add_google_my_business_location_extensions.py.
+
 15.17.0:
 - Added support for v201409.
 - Added App Engine AdWords Sample.

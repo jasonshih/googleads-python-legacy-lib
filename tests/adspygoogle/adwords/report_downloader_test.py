@@ -51,9 +51,6 @@ class ReportDownloaderTest(unittest.TestCase):
           'clientCustomerId': 'client customer id'
       }
       client = AdWordsClient(self.oauth2_headers, path='/tmp/')
-      self.service_v201402 = client.GetReportDownloader(
-          version='v201402')
-
       self.service = client.GetReportDownloader()
 
   def _ThrowErrorFromMakeRequest(self, payload_contents):
@@ -160,41 +157,8 @@ class ReportDownloaderTest(unittest.TestCase):
     except KeyError, e:
       self.assertIs(exception1, e)
 
-  def testGenerateHeadersReturnMoneyInMicros_v201402(self):
-    """Tests that GenerateHeaders works with returnMoneyInMicros in v201402."""
-    expected_return_value = {
-        'Accept-Encoding': 'gzip',
-        'Content-Encoding': 'gzip',
-        'developerToken': 'DEV TOKEN',
-        'clientCustomerId': 'client customer id',
-        'returnMoneyInMicros': 'True',
-        'skipReportHeader': 'True',
-        'skipReportSummary': 'True',
-        'Authorization': 'Bearer ACCESS_TOKEN',
-        'User-Agent': ''.join('USER AGENT,gzip')
-    }
-
-    # Check that returnMoneyInMicros works when set to true.
-    self.assertEqual(
-        expected_return_value,
-        self.service_v201402._ReportDownloader__GenerateHeaders(
-            True, True, True))
-
-    # Check that returnMoneyInMicros works when set to false.
-    expected_return_value['returnMoneyInMicros'] = 'False'
-    self.assertEqual(
-        expected_return_value,
-        self.service_v201402._ReportDownloader__GenerateHeaders(
-            False, True, True))
-
-    # Default returnMoneyInMicros value is not included in the headers.
-    del expected_return_value['returnMoneyInMicros']
-    self.assertEqual(expected_return_value,
-                     self.service_v201402._ReportDownloader__GenerateHeaders(
-                         None, True, True))
-
-  def testGenerateHeadersReturnMoneyInMicros_v201406(self):
-    """Tests that GenerateHeaders fails with returnMoneyInMicros in v201406."""
+  def testGenerateHeaders(self):
+    """Tests that GenerateHeaders produces valid headers."""
     expected_return_value = {
         'Accept-Encoding': 'gzip',
         'Content-Encoding': 'gzip',
@@ -204,20 +168,9 @@ class ReportDownloaderTest(unittest.TestCase):
         'User-Agent': ''.join('USER AGENT,gzip')
     }
 
-    # Check that returnMoneyInMicros works when set to true.
-    self.assertRaises(AdWordsError,
-                      self.service._ReportDownloader__GenerateHeaders, True,
-                      False, False)
-
-    # Check that returnMoneyInMicros works when set to false.
-    self.assertRaises(AdWordsError,
-                      self.service._ReportDownloader__GenerateHeaders, False,
-                      False, False)
-
-    # Default returnMoneyInMicros value is not included in the headers.
     self.assertEqual(expected_return_value,
-                     self.service._ReportDownloader__GenerateHeaders(
-                         None, False, False))
+                     self.service._ReportDownloader__GenerateHeaders(False,
+                                                                     False))
 
 
 if __name__ == '__main__':

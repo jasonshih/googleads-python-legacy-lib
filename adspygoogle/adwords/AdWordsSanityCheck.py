@@ -27,14 +27,10 @@ DEPRECATED_AFTER = {
 
 # For the special case where a Service is brought back after being deprecated;
 # allows you to specify versions where the Service is deprecated.
-DEPRECATED_IN = {
-    'CampaignSharedSetService': ['v201402'],
-    'SharedCriterionService': ['v201402'],
-}
+DEPRECATED_IN = {}
 
 # A map of the supported servers for each version.
 _VERSION_SERVER_MAP = {
-    'v201402': ('https://adwords.google.com',),
     'v201406': ('https://adwords.google.com',),
     'v201409': ('https://adwords.google.com',),
 }

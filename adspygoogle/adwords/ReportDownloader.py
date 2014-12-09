@@ -38,7 +38,6 @@ from adspygoogle.common.Errors import ValidationError
 from adspygoogle.common.Logger import Logger
 
 
-FINAL_RETURN_MONEY_IN_MICROS_VERSION = 'v201402'
 SERVICE_NAME = 'ReportDefinitionService'
 DOWNLOAD_URL_BASE = '/api/adwords/reportdownload'
 REPORT_ID = '?__rd=%s'
@@ -80,14 +79,12 @@ class ReportDownloader(object):
     self._soappyservice = XsdToWsdl.CreateWsdlFromXsdUrl(xsd_url)
     self._logger = logger
 
-  def DownloadReport(self, report_definition_or_id, return_micros=None,
-                     skip_report_header=None, skip_report_summary=None,
-                     file_path=None, fileobj=None):
+  def DownloadReport(self, report_definition_or_id, skip_report_header=None,
+                     skip_report_summary=None, file_path=None, fileobj=None):
     """Downloads a report by object or id.
 
     Args:
       report_definition_or_id: dict or str Report or reportDefinitionId.
-      return_micros: bool Whether to return currency in micros (optional).
       skip_report_header: A boolean indicating whether to include a header row
           containing the report name and date range. If false or not specified,
           report output will include the header row.
@@ -106,24 +103,22 @@ class ReportDownloader(object):
       fileobj = open(file_path, 'w+')
 
     if isinstance(report_definition_or_id, dict):
-      return self.__DownloadAdHocReport(report_definition_or_id, return_micros,
+      return self.__DownloadAdHocReport(report_definition_or_id,
                                         skip_report_header, skip_report_summary,
                                         fileobj) or file_path
     else:
-      return self.__DownloadReportById(report_definition_or_id, return_micros,
+      return self.__DownloadReportById(report_definition_or_id,
                                        skip_report_header, skip_report_summary,
                                        fileobj) or file_path
 
   def DownloadReportWithAwql(self, report_query, download_format,
-                             return_micros=None, skip_report_header=None,
-                             skip_report_summary=None, file_path=None,
-                             fileobj=None):
+                             skip_report_header=None, skip_report_summary=None,
+                             file_path=None, fileobj=None):
     """Downloads a report with AWQL.
 
     Args:
       report_query: str AWQL for the report.
       download_format: str Download format. E.g. CSV, TSV, XML.
-      return_micros: bool Whether to return currency in micros (optional).
       skip_report_header: A boolean indicating whether to include a header row
           containing the report name and date range. If false or not specified,
           report output will include the header row.
@@ -142,18 +137,16 @@ class ReportDownloader(object):
       fileobj = open(file_path, 'w+')
 
     return self.__DownloadAdHocReportWithAwql(report_query, download_format,
-                                              return_micros, skip_report_header,
+                                              skip_report_header,
                                               skip_report_summary,
                                               fileobj) or file_path
 
-  def __DownloadAdHocReport(self, report_definition, return_micros=None,
-                            skip_report_header=None, skip_report_summary=None,
-                            fileobj=None):
+  def __DownloadAdHocReport(self, report_definition, skip_report_header=None,
+                            skip_report_summary=None, fileobj=None):
     """Downloads an AdHoc report.
 
     Args:
       report_definition: dict Report to download.
-      return_micros: bool Whether to return currency in micros (optional).
       skip_report_header: A boolean indicating whether to include a header row
           containing the report name and date range. If false or not specified,
           report output will include the header row.
@@ -169,18 +162,17 @@ class ReportDownloader(object):
     query_params = {'__rdxml': report_xml}
 
     payload = urllib.urlencode(query_params)
-    return self.__DownloadReport(payload, return_micros, skip_report_header,
+    return self.__DownloadReport(payload, skip_report_header,
                                  skip_report_summary, fileobj)
 
   def __DownloadAdHocReportWithAwql(self, report_query, download_format,
-                                    return_micros=None, skip_report_header=None,
+                                    skip_report_header=None,
                                     skip_report_summary=None, fileobj=None):
     """Downloads an AdHoc report with AWQL.
 
     Args:
       report_query: str AWQL to download a report for.
       download_format: str Format of the report download.
-      return_micros: bool Whether to return currency in micros (optional).
       skip_report_header: A boolean indicating whether to include a header row
           containing the report name and date range. If false or not specified,
           report output will include the header row.
@@ -198,17 +190,15 @@ class ReportDownloader(object):
     }
 
     payload = urllib.urlencode(query_params)
-    return self.__DownloadReport(payload, return_micros, skip_report_header,
+    return self.__DownloadReport(payload, skip_report_header,
                                  skip_report_summary, fileobj)
 
-  def __DownloadReport(self, report_payload, return_micros=None,
-                       skip_report_header=None, skip_report_summary=None,
-                       fileobj=None):
+  def __DownloadReport(self, report_payload, skip_report_header=None,
+                       skip_report_summary=None, fileobj=None):
     """Downloads an AdHoc report for the specified payload.
 
     Args:
       report_payload: str Report payload to POST to the server.
-      return_micros: bool Whether to return currency in micros (optional).
       skip_report_header: A boolean indicating whether to include a header row
           containing the report name and date range. If false or not specified,
           report output will include the header row.
@@ -222,8 +212,7 @@ class ReportDownloader(object):
     """
     url = self.__GenerateUrl()
     self._CheckAuthentication()
-    headers = self.__GenerateHeaders(return_micros, skip_report_header,
-                                     skip_report_summary,)
+    headers = self.__GenerateHeaders(skip_report_header, skip_report_summary)
     headers['Content-Type'] = 'application/x-www-form-urlencoded'
     headers['Content-Length'] = str(len(report_payload))
     return self.__MakeRequest(url, headers, fileobj, payload=report_payload)
@@ -274,14 +263,12 @@ class ReportDownloader(object):
     """
     return re.sub(ATTRIBUTES_REGEX, '', report_xml).strip()
 
-  def __DownloadReportById(self, report_definition_id, return_micros=None,
-                           skip_report_header=None, skip_report_summary=None,
-                           fileobj=None):
+  def __DownloadReportById(self, report_definition_id, skip_report_header=None,
+                           skip_report_summary=None, fileobj=None):
     """Download report and return raw data.
 
     Args:
       report_definition_id: str Id of the report definition to download.
-      return_micros: bool Whether to return currency in micros.
       skip_report_header: A boolean indicating whether to include a header row
           containing the report name and date range. If false or not specified,
           report output will include the header row.
@@ -295,7 +282,7 @@ class ReportDownloader(object):
     """
     self._CheckAuthentication()
     url = self.__GenerateUrl(report_definition_id)
-    headers = self.__GenerateHeaders(return_micros, skip_report_header,
+    headers = self.__GenerateHeaders(skip_report_header,
                                      skip_report_summary,)
     return self.__MakeRequest(url, headers, fileobj)
 
@@ -314,12 +301,11 @@ class ReportDownloader(object):
       url.append(REPORT_ID % report_definition_id)
     return ''.join(url)
 
-  def __GenerateHeaders(self, return_micros=None, skip_report_header=None,
+  def __GenerateHeaders(self, skip_report_header=None,
                         skip_report_summary=None):
     """Generates the headers to use for the report download.
 
     Args:
-      return_micros: bool whether or not to use micros for money.
       skip_report_header: A boolean indicating whether to include a header row
           containing the report name and date range. If false or not specified,
           report output will include the header row.
@@ -342,13 +328,6 @@ class ReportDownloader(object):
 
     if skip_report_summary:
       headers.update({'skipReportSummary': str(skip_report_summary)})
-
-    if return_micros is not None:
-      if self._op_config['version'] == FINAL_RETURN_MONEY_IN_MICROS_VERSION:
-        headers['returnMoneyInMicros'] = str(return_micros)
-      else:
-        raise AdWordsError('returnMoneyInMicros isn\'t supported in this'
-                           ' version.')
 
     headers['developerToken'] = self._headers['developerToken']
     headers['User-Agent'] = self._headers['userAgent']
