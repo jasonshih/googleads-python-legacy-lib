@@ -1,9 +1,13 @@
 ====================================
-Notice: A Newer Library Is Available
+Notice: This library is now sunset
 ====================================
 
-A newer library named googleads is now available, complete with Python 3
-support. You can read more about it here:
+As of 1/5/15, this library is sunset and will no longer receive updates for new
+versions of supported APIs or bug fixes. Once all supported APIs are no longer
+compatible with this library, it will be removed from GitHub and PyPI.
+
+A newer library named googleads is available that supports Python 2.7 and Python
+3.3+. You can read more about it here:
 
 * `The release announcement <http://googleadsdeveloper.blogspot.com/2014/03/the-ads-apis-python-client-library.html>`_.
 * `googleads github page <https://github.com/googleads/googleads-python-lib>`_.

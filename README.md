@@ -1,7 +1,13 @@
-# Notice: A Newer Library Is Available
+# Notice: This library is now sunset
 
-A newer library named `googleads` is now available, complete with Python 3
-support. You can read more about it here:
+As we [announced earlier](http://googleadsdeveloper.blogspot.com/2014/11/adspygoogle-sunset-on-january-5-2015.html),
+this library has been sunset on 1/5/15. We will no longer update this library
+for new versions of the supported APIs or act on issues submitted to the issue
+tracker. Once all supported APIs are no longer compatible with this library, it
+will be removed from GitHub and PyPI.
+
+A newer library named `googleads` is now available that supports Python 2.7
+and Python 3.3+. You can read more about it here:
 * [The release announcement](http://googleadsdeveloper.blogspot.com/2014/03/the-ads-apis-python-client-library.html)
 * [The googleads github page](https://github.com/googleads/googleads-python-lib)
 * [Migrating from adspygoogle to googleads](https://github.com/googleads/googleads-python-lib/wiki/Migrating-from-adspygoogle-to-googleads)
@@ -72,4 +78,4 @@ other news:
     api.jdilallo@gmail.com (Joseph DiLallo)
 
 ##Maintainers:
-    api.jdilallo@gmail.com (Joseph DiLallo)
+    api.msaniscalchi@gmail.com (Mark Saniscalchi)
